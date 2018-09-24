@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run Robot",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "pacman.robot.Robot",
+            "args": "",
+            "projectName": "RoboPacman2018"
+        }
+    ]
+}
