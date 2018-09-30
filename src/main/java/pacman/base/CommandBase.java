@@ -4,24 +4,16 @@ package pacman.base;
 public class CommandBase {
 	
 	protected void initialize() {
-		//Util.log("CommandBase:initialize "+this.getClass().getName());
+		System.out.println("CommandBase:initialize");
 	}
 	
 	protected void execute() {
-		//Util.log("CommandBase:execute "+this.getClass().getName());
+		System.out.println("CommandBase:execute");
 	}
 	
 	protected boolean isFinished() {
-		//Util.log("CommandBase:isFinished "+this.getClass().getName());
+		System.out.println("CommandBase:isFinished");
 		return false;
-	}
-	
-	public void sleep(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
 }

@@ -1,14 +1,13 @@
 package pacman.base;
 
-import pacman.graphics.PacmanGraphics;
-import pacman.robot.Robot;
-
 public class DriveTrainEngine {
+
+	public static int MAX_SPEED = 5;
 	
 	private double distance = 0;
 	private int angle = 0;
-	private int posX = PacmanGraphics.WIDTH / 2;
-	private int posY = PacmanGraphics.HEIGHT - 100;
+	private int posX = 0;
+	private int posY = 0;
 	private int speed = 0;
 	private double left = 0;
 	private double right = 0;
@@ -25,11 +24,11 @@ public class DriveTrainEngine {
 			Util.log("tankDrive neutral");
 		} else if (left > 0 && right > 0 && left == right) {
 			// FORWARD: increase speed
-			speed = Robot.MAX_SPEED;
+			speed = MAX_SPEED;
 			Util.log("tankDrive forward");
 		} else if (left < 0 && right < 0 && left == right) {
 			// REVERSE: increase speed
-			speed = -Robot.MAX_SPEED;
+			speed = -MAX_SPEED;
 			Util.log("tankDrive reverse");
 		} else if (left >= 0 && left > right) {
 			// RIGHT TURN
@@ -80,6 +79,28 @@ public class DriveTrainEngine {
 
 	public void update(DriveTrain driveTrain) {
 		driveTrain.update(posX,posY,speed,distance,angle);
+	}
+
+	public void setup(int startingPosition) {
+		posY =500;
+
+		if (startingPosition == 1) {
+			posX = 50;
+			posY = 100;
+		}
+		if (startingPosition == 2) {
+			posX = 550;
+			posY = 100;
+		}
+		if (startingPosition == 3) {
+			posX = 50;
+			posY = 400;
+		}
+		if (startingPosition == 4) {
+			posX = 550;
+			posY = 400;
+		}		
+
 	}
 
 }

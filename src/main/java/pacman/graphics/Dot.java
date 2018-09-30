@@ -1,8 +1,8 @@
 package pacman.graphics;
 
 public class Dot {
-	int x;
-	int y;
+	private int x;
+	private int y;
 	
 	public Dot(int x, int y) {
 		super();

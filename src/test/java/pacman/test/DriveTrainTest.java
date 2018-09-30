@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import pacman.base.DriveTrain;
 import pacman.base.DriveTrainEngine;
-import pacman.robot.Robot;
 
 public class DriveTrainTest {
 
@@ -23,14 +22,14 @@ public class DriveTrainTest {
     	// should immediately accelerate to max speed
 		driveTrain.tankDrive(1, 1);
 		engine.tankDrive(driveTrain);
-    	assertEquals("Speed max of "+Robot.MAX_SPEED,Robot.MAX_SPEED,driveTrain.getSpeed());
+    	assertEquals("Speed max of "+DriveTrainEngine.MAX_SPEED,DriveTrainEngine.MAX_SPEED,driveTrain.getSpeed());
 
     	// should maintain max speed even while driving full out
 		driveTrain.tankDrive(1, 1);
 		engine.tankDrive(driveTrain);
 		driveTrain.tankDrive(1, 1);
 		engine.tankDrive(driveTrain);
-    	assertEquals("Speed max of "+Robot.MAX_SPEED,Robot.MAX_SPEED,driveTrain.getSpeed());
+    	assertEquals("Speed max of "+DriveTrainEngine.MAX_SPEED,DriveTrainEngine.MAX_SPEED,driveTrain.getSpeed());
 
     	// should stop when trying to turn
 		driveTrain.tankDrive(1, 1);
@@ -56,7 +55,7 @@ public class DriveTrainTest {
 		engine.tankDrive(driveTrain);
 		driveTrain.tankDrive(0.5, 0.5);
 		engine.tankDrive(driveTrain);
-    	assertEquals("Speed max of "+Robot.MAX_SPEED,Robot.MAX_SPEED,driveTrain.getSpeed());
+    	assertEquals("Speed max of "+DriveTrainEngine.MAX_SPEED,DriveTrainEngine.MAX_SPEED,driveTrain.getSpeed());
 
     	// should accelerate to max for anything > 0
 		driveTrain.tankDrive(0,0);

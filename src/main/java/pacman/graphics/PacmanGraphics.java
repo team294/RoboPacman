@@ -36,11 +36,15 @@ public class PacmanGraphics extends Canvas{
 
 	private int score = 0;
 	private int ticks = 0;
+	private int level = 1;
+	private boolean caught = false;
 
 	private BufferStrategy strategy;
 	private BufferedImage robotImage;
 	private BufferedImage dotImage;
+	private BufferedImage ghostImage;
 	private List<Dot> dotList = new ArrayList<Dot>();
+	private List<Ghost> ghostList = new ArrayList<Ghost>();
 
 	private DriveTrain driveTrain = Robot.driveTrain;
 	//private Arm arm = Arm.getInstance();
@@ -65,19 +69,29 @@ public class PacmanGraphics extends Canvas{
 	public int getScore() {
 		return score;
 	}
+
+	public boolean getCaught() {
+		return caught;
+	}
 	
 	public int getTime() {
 		double time = ticks * (TICK_TIME_MS / 1000);
 		return (int) time;
 	}
 
+	public List<Ghost> getGhostList() {
+		return ghostList;
+	}
+
 	
-	public void setup() {
+	public void setup(int level) {
 		ticks = 0;
+		this.level = level;
 		robotImage = getImage("robot.png");
 		dotImage = getImage("dot.png");
+		ghostImage = getImage("ghost.png");
 		
-		JFrame container = new JFrame("Robo Pacman");
+		JFrame container = new JFrame("294 Robo Pacman");
 		
 		JPanel panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -105,53 +119,37 @@ public class PacmanGraphics extends Canvas{
 		strategy = getBufferStrategy();
 		
 		// create the dots
-		int x = PacmanGraphics.WIDTH / 2;
-		int y = PacmanGraphics.HEIGHT - 100;
-		
-		for (int i=0;i<4;i++) {
-			y -= 50;
-			dotList.add(new Dot(x,y));	
-		}
-		
-		for (int i=0;i<4;i++) {
+		int x = 50;
+		for (int i=0;i<11;i++) {
+			dotList.add(new Dot(x,100));	
+			dotList.add(new Dot(x,250));	
+			dotList.add(new Dot(x,400));	
 			x += 50;
-			dotList.add(new Dot(x,y));	
-		}
-		
-		for (int i=0;i<4;i++) {
-			y -= 50;
-			dotList.add(new Dot(x,y));	
-			//dotList.add(new Dot(x-50,y));	
-		}
-		
-		for (int i=0;i<8;i++) {
-			x -= 50;
-			dotList.add(new Dot(x,y));	
-		}
-		
-		for (int i=0;i<6;i++) {
-			y += 50;
-			dotList.add(new Dot(x,y));	
-		}
-		
-		y += 50;
-		x += 50;
-		dotList.add(new Dot(x,y));	
-		
-		y += 50;
-		x += 50;
-		dotList.add(new Dot(x,y));	
-		
-		y += 50;
-		x += 50;
-		dotList.add(new Dot(x,y));	
-
-		for (int i=0;i<5;i++) {
-			x += 50;
-			dotList.add(new Dot(x,y));	
 		}
 
+		dotList.add(new Dot(50,150));
+		dotList.add(new Dot(50,200));	
+		dotList.add(new Dot(50,300));
+		dotList.add(new Dot(50,350));	
+		
+		dotList.add(new Dot(300,150));
+		dotList.add(new Dot(300,200));	
+		dotList.add(new Dot(300,300));
+		dotList.add(new Dot(300,350));	
 
+		dotList.add(new Dot(550,150));
+		dotList.add(new Dot(550,200));	
+		dotList.add(new Dot(550,300));
+		dotList.add(new Dot(550,350));	
+
+		// create the ghosts
+		if (level > 1) {
+			ghostList.add(new Ghost(250,100));
+			ghostList.add(new Ghost(250,250));
+			ghostList.add(new Ghost(250,400));
+		}
+
+		
 		
 	}
 	
@@ -170,6 +168,18 @@ public class PacmanGraphics extends Canvas{
 		return collision;
 	}
 	
+	public static boolean checkForCollision(Ghost ghost, int x, int y) {
+		boolean collision = false;
+		
+		if ((Math.abs((ghost.getX()- x)) < 25) && ghost.getY() == y) {
+			collision = true;
+
+		} else {
+			//System.out.printf("no collision dot %s,%s pacman %s,%s\n",dot.getX(), dot.getY(), x,y);
+		}
+		
+		return collision;
+	}
 
 
 	public void drawField(RobotBase robot) {
@@ -192,22 +202,43 @@ public class PacmanGraphics extends Canvas{
 			} else {
 				g.drawImage(dotImage, d.getX(), d.getY(), null);
 			}
-		}		
+		}	
+		
+		// draw the ghosts and check for collisions
+		for (Iterator<Ghost> iterator = ghostList.iterator(); iterator.hasNext();) {
+			Ghost ghost = iterator.next();
+			int direction = ghost.getMove();
+			int nextx = ghost.getX() + direction;
+			if ((nextx < (HEIGHT-100)) && (nextx > 50) ) {
+				ghost.setX(nextx);
+			}
+			if (checkForCollision(ghost,driveTrain.getPositionX(), driveTrain.getPositionY()))
+			{
+				caught = true;
+				Util.log("Ghost!");
+				iterator.remove();
+			} else {
+				g.drawImage(ghostImage, ghost.getX(), ghost.getY(), null);
+			}
+		}			
 
 		// draw pacman
 		// rotate as needed around the center of the image
-		double rotationRequired = Math.toRadians (driveTrain.getAngle());
-		double centerX = robotImage.getWidth() / 2;
-		double centerY = robotImage.getHeight() / 2;
-		
-		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, centerX, centerY);
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		if (caught == false) {
+			double rotationRequired = Math.toRadians (driveTrain.getAngle());
+			double centerX = robotImage.getWidth() / 2;
+			double centerY = robotImage.getHeight() / 2;
+			
+			AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, centerX, centerY);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
-		// Drawing the rotated image at the required drawing locations
-		g.drawImage(op.filter(robotImage, null), driveTrain.getPositionX(), driveTrain.getPositionY(), null);
+			// Drawing the rotated image at the required drawing locations
+			g.drawImage(op.filter(robotImage, null), driveTrain.getPositionX(), driveTrain.getPositionY(), null);
+
+		}
 		
 		g.setColor(Color.white);
-		g.drawString("Time "+getTime()+" Score "+score,25,25);
+		g.drawString("Time "+getTime()+" Level "+level+" Score "+score,25,25);
 		
 		// show the graphics
 		g.dispose();

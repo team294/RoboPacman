@@ -7,18 +7,16 @@ public class SpinForever extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		System.out.println("init");
+		System.out.println("SpinForever.initialize");
 	}
 
 	@Override
 	protected void execute() {
-		System.out.println("execute");
 		Robot.driveTrain.tankDrive(1, 0);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		System.out.println("isFinished");
 		return false;
 	}
 

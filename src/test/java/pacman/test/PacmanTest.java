@@ -14,7 +14,7 @@ public class PacmanTest {
     @Test public void testPacman() {
     	
 		PacmanGraphics graphics = new PacmanGraphics();
-		graphics.setup();
+		graphics.setup(1);
 		
 		assertEquals("Initial score",0,graphics.getScore());
 		assertEquals("Initial time",0,graphics.getTime());

@@ -1,32 +1,44 @@
 package pacman.base;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import pacman.graphics.PacmanGraphics;
 import pacman.robot.Robot;
 
 public class RobotRunner {
+
+	public static final int MAX_TIME = 60;
 	
 	private DriveTrainEngine driveTrainEngine = new DriveTrainEngine();
-	public static final int MAX_TIME = 15;
+	private GhostSensorEngine ghostSensorEngine = new GhostSensorEngine();
 	
 	public void run(RobotBase robot, CommandGroupBase group) {
-		run(robot,group,100);
+		run(robot,group,100,1);
 	}
 	
-	public void run(RobotBase robot, CommandGroupBase group, long delay) {
+	public void run(RobotBase robot, CommandGroupBase group, long delay, int level) {
 		
 		boolean running = true;
-		int currentCommand = 0;
 		boolean runInit = true;
+		int currentCommand = 0;
+		int startingPosition = 4;
+		int ping = 0;
 		
 		Util.log("RobotRunner:robot.robotInit");
 		robot.robotInit();
 		
 		PacmanGraphics graphics = new PacmanGraphics();
-		graphics.setup();
+		graphics.setup(level);
 
+		// starting position is randomized for level 3 and above
+		if (level >= 3) {
+			startingPosition = ThreadLocalRandom.current().nextInt(1,5);
+		}
+
+		driveTrainEngine.setup(startingPosition);
 		driveTrainEngine.update(Robot.driveTrain);
 		
-		while (running && graphics.getTime() <= MAX_TIME) {
+		while (running && !graphics.getCaught() && graphics.getTime() <= MAX_TIME) {
 			
 			// get a command from the group
 			CommandBase command = group.getCommand(currentCommand);
@@ -58,8 +70,20 @@ public class RobotRunner {
 					command.initialize();
 					runInit = false;
 				}
+				
+				// update all sensors before executing command
+				ping = ghostSensorEngine.getPing(Robot.driveTrain.getPositionX(), 
+					Robot.driveTrain.getPositionY(), 
+					Robot.driveTrain.getAngle(), 
+					graphics.getGhostList());
+
+				Robot.ghostSensor.setPing(ping);
+
+				// run the command
 				Util.log("RobotRunner:execute command "+command.getClass().getName());
 				command.execute();	
+
+				//move pacman based upon current values from the drivetrain
 				driveTrainEngine.tankDrive(Robot.driveTrain);
 			}
 			
