@@ -3,10 +3,10 @@ package pacman.graphics;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Ghost {
-	private int x;
-	private int y;
-	private int direction = 0;
-	private int duration = 0;
+	protected int x;
+	protected int y;
+	protected int direction = 0;
+	protected int duration = 0;
 	
 	public Ghost(int x, int y) {
 		super();
@@ -26,7 +26,9 @@ public class Ghost {
 		this.y = y;
 	}
 
-	public int getMove() {
+	public void move(int pacmanX, int pacmanY) {
+		int next = 0;
+
 		if (duration == 0) {
 			duration = ThreadLocalRandom.current().nextInt(3, 10);
 			direction = ThreadLocalRandom.current().nextInt(-5, 5);
@@ -34,7 +36,9 @@ public class Ghost {
 			duration--;
 		}
 
-		return direction;
+		next = getX()+direction;
+
+		if (next >= 0) setX(next);
 	}
 
 }

@@ -23,6 +23,7 @@ public class RobotRunner {
 		int currentCommand = 0;
 		int startingPosition = 4;
 		int ping = 0;
+		int radar = 0;
 		
 		Util.log("RobotRunner:robot.robotInit");
 		robot.robotInit();
@@ -31,7 +32,7 @@ public class RobotRunner {
 		graphics.setup(level);
 
 		// starting position is randomized for level 3 and above
-		if (level >= 3) {
+		if (level == 3) {
 			startingPosition = ThreadLocalRandom.current().nextInt(1,5);
 		}
 
@@ -78,6 +79,13 @@ public class RobotRunner {
 					graphics.getGhostList());
 
 				Robot.ghostSensor.setPing(ping);
+
+				radar = ghostSensorEngine.getRadar(Robot.driveTrain.getPositionX(), 
+					Robot.driveTrain.getPositionY(), 
+					Robot.driveTrain.getAngle(), 
+					graphics.getGhostList());
+					
+				Robot.ghostSensor.setRadar(radar);
 
 				// run the command
 				Util.log("RobotRunner:execute command "+command.getClass().getName());

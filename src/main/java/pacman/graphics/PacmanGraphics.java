@@ -119,37 +119,51 @@ public class PacmanGraphics extends Canvas{
 		strategy = getBufferStrategy();
 		
 		// create the dots
-		int x = 50;
-		for (int i=0;i<11;i++) {
-			dotList.add(new Dot(x,100));	
-			dotList.add(new Dot(x,250));	
-			dotList.add(new Dot(x,400));	
-			x += 50;
-		}
 
-		dotList.add(new Dot(50,150));
-		dotList.add(new Dot(50,200));	
-		dotList.add(new Dot(50,300));
-		dotList.add(new Dot(50,350));	
-		
-		dotList.add(new Dot(300,150));
-		dotList.add(new Dot(300,200));	
-		dotList.add(new Dot(300,300));
-		dotList.add(new Dot(300,350));	
-
-		dotList.add(new Dot(550,150));
-		dotList.add(new Dot(550,200));	
-		dotList.add(new Dot(550,300));
-		dotList.add(new Dot(550,350));	
-
-		// create the ghosts
-		if (level > 1) {
-			ghostList.add(new Ghost(250,100));
-			ghostList.add(new Ghost(250,250));
-			ghostList.add(new Ghost(250,400));
-		}
+		if (level == 294) {
+			int x = 50;
+			for (int i=0;i<10;i++) {
+				dotList.add(new Dot(x,400));	
+				x += 50;
+			}
+			ghostList.add(new GhostVertical(150,400));
+			ghostList.add(new GhostVertical(250,400));
+			ghostList.add(new GhostVertical(350,400));
+			ghostList.add(new GhostVertical(450,400));
+		} else {
 
 		
+			int x = 50;
+			for (int i=0;i<11;i++) {
+				dotList.add(new Dot(x,100));	
+				dotList.add(new Dot(x,250));	
+				dotList.add(new Dot(x,400));	
+				x += 50;
+			}
+
+			dotList.add(new Dot(50,150));
+			dotList.add(new Dot(50,200));	
+			dotList.add(new Dot(50,300));
+			dotList.add(new Dot(50,350));	
+			
+			dotList.add(new Dot(300,150));
+			dotList.add(new Dot(300,200));	
+			dotList.add(new Dot(300,300));
+			dotList.add(new Dot(300,350));	
+
+			dotList.add(new Dot(550,150));
+			dotList.add(new Dot(550,200));	
+			dotList.add(new Dot(550,300));
+			dotList.add(new Dot(550,350));	
+
+			// create the ghosts
+			if (level > 1) {
+				ghostList.add(new Ghost(250,100));
+				ghostList.add(new Ghost(250,250));
+				ghostList.add(new Ghost(250,400));
+			}
+
+		}
 		
 	}
 	
@@ -207,15 +221,12 @@ public class PacmanGraphics extends Canvas{
 		// draw the ghosts and check for collisions
 		for (Iterator<Ghost> iterator = ghostList.iterator(); iterator.hasNext();) {
 			Ghost ghost = iterator.next();
-			int direction = ghost.getMove();
-			int nextx = ghost.getX() + direction;
-			if ((nextx < (HEIGHT-100)) && (nextx > 50) ) {
-				ghost.setX(nextx);
-			}
+			ghost.move(driveTrain.getPositionX(), driveTrain.getPositionY());
+
 			if (checkForCollision(ghost,driveTrain.getPositionX(), driveTrain.getPositionY()))
 			{
 				caught = true;
-				Util.log("Ghost!");
+				Util.log("Collision with ghost!");
 				iterator.remove();
 			} else {
 				g.drawImage(ghostImage, ghost.getX(), ghost.getY(), null);
