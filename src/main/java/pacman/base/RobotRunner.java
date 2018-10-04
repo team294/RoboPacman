@@ -25,7 +25,7 @@ public class RobotRunner {
 		int ping = 0;
 		int radar = 0;
 		
-		Util.log("RobotRunner:robot.robotInit");
+		Util.log("RobotRunner:robot.robotInit version:"+robot.getVersion());
 		robot.robotInit();
 		
 		PacmanGraphics graphics = new PacmanGraphics();
