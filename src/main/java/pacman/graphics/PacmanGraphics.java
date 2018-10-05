@@ -184,10 +184,11 @@ public class PacmanGraphics extends Canvas{
 	
 	public static boolean checkForCollision(Ghost ghost, int x, int y) {
 		boolean collision = false;
-		
-		if ((Math.abs((ghost.getX()- x)) < 25) && ghost.getY() == y) {
-			collision = true;
+		int dist = Math.abs(Util.getDistance(ghost.getX(), ghost.getY(), x, y));
 
+		if (dist < 25) {
+			System.out.printf("collision dot %s,%s pacman %s,%s dist:%s %n",ghost.getX(), ghost.getY(), x,y,dist);
+			collision = true;
 		} else {
 			//System.out.printf("no collision dot %s,%s pacman %s,%s\n",dot.getX(), dot.getY(), x,y);
 		}

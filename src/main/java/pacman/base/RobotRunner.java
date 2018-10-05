@@ -77,7 +77,7 @@ public class RobotRunner {
 				}
 				
 				// update all sensors before executing command
-				ping = ghostSensorEngine.getPing(Robot.driveTrain.getPositionX(), 
+				ping = ghostSensorEngine.getDirectionalRadar(Robot.driveTrain.getPositionX(), 
 					Robot.driveTrain.getPositionY(), 
 					Robot.driveTrain.getAngle(), 
 					graphics.getGhostList());

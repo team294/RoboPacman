@@ -24,7 +24,7 @@ public class Util {
 	
     public static int getDistance(int x1, int y1, int x2, int y2) {
     	double distance = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
-    	System.out.printf("getDistance %s,%s %s,%s dist:%s %n",x1,y1,x2,y2,distance);
+    	//System.out.printf("getDistance %s,%s %s,%s dist:%s %n",x1,y1,x2,y2,distance);
     	return (int) distance;
     }	
 }
