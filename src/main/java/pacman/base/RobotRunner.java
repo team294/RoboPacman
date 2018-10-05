@@ -24,6 +24,7 @@ public class RobotRunner {
 		int startingPosition = 4;
 		int ping = 0;
 		int radar = 0;
+		int directionalRadar = 0;
 		
 		Util.log("RobotRunner:robot.robotInit version:"+robot.getVersion());
 		robot.robotInit();
@@ -34,6 +35,9 @@ public class RobotRunner {
 		// starting position is randomized for level 3 and above
 		if (level == 3) {
 			startingPosition = ThreadLocalRandom.current().nextInt(1,5);
+		}
+		if (level == 294) {
+			startingPosition = 5;
 		}
 
 		driveTrainEngine.setup(startingPosition);
@@ -86,6 +90,13 @@ public class RobotRunner {
 					graphics.getGhostList());
 					
 				Robot.ghostSensor.setRadar(radar);
+
+				directionalRadar = ghostSensorEngine.getDirectionalRadar(Robot.driveTrain.getPositionX(), 
+					Robot.driveTrain.getPositionY(), 
+					Robot.driveTrain.getAngle(), 
+					graphics.getGhostList());
+
+				Robot.ghostSensor.setDirectionalRadar(directionalRadar);
 
 				// run the command
 				Util.log("RobotRunner:execute command "+command.getClass().getName());

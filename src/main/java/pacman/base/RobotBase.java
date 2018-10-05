@@ -10,6 +10,6 @@ public class RobotBase {
 	}
 	
 	public String getVersion() {
-		return "1004.0";
+		return "1004.1";
 	}
 }

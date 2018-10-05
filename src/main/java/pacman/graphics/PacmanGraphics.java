@@ -174,7 +174,7 @@ public class PacmanGraphics extends Canvas{
 		if (dot.getX() == x && dot.getY() == y) {
 			collision = true;
 			score++;
-			Util.log("score: "+score);
+			Util.log("score: "+score+" at time "+getTime());
 		} else {
 			//System.out.printf("no collision dot %s,%s pacman %s,%s\n",dot.getX(), dot.getY(), x,y);
 		}

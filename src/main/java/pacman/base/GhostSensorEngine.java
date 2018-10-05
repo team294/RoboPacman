@@ -1,8 +1,9 @@
 package pacman.base;
 
-import pacman.graphics.Ghost;
-
+import java.util.ArrayList;
 import java.util.List;
+
+import pacman.graphics.Ghost;
 
 public class GhostSensorEngine {
 
@@ -48,12 +49,56 @@ public class GhostSensorEngine {
         return found;
     }
 
-    public int getRadar(int posX, int posY, int angle, List<Ghost> ghostList) {
+    public int getDirectionalRadar(int posX, int posY, int angle, List<Ghost> ghostList) {
         int radar = 0;
         int distance = 0;
+
+        //filter out ghosts that are not in range based on angle
+        List<Ghost> ghostsToCheck = new ArrayList<Ghost>();
+        for (Ghost g:ghostList) {
+            if (angle == -90 && g.getX() < posX) {
+                ghostsToCheck.add(g);
+            }
+            if (angle == 90 && g.getX() > posX) {
+                ghostsToCheck.add(g);
+            }
+            if (angle == 0 && g.getY() < posY) {
+                ghostsToCheck.add(g);
+            }
+            if (angle == 180 && g.getY() > posY) {
+                ghostsToCheck.add(g);
+            }
+        }
         
         //System.out.printf("checkForGhost pacman is at %d %d %n",posX,posY);
         
+        for (Ghost g:ghostsToCheck) {
+	    	distance = Util.getDistance(posX, posY, g.getX(), g.getY());
+	        //System.out.printf("checkForGhost at x:%d y:%d dist:%d %n",g.getX(),g.getY(),distance);
+	        
+	    	if (distance > 0 && distance <= MAX_RANGE) {
+		        if (radar == 0) {
+		        	radar = distance;
+		        } else {
+		        	// in case there are multiple ghosts in range return the one closest
+		        	if (distance < radar) {
+		        		radar = distance;
+		        	}
+		        }
+	    	}
+        }
+        
+        //System.out.printf("checkForGhost radar is %d %n",radar);
+        
+        return radar;
+    } 
+
+    public int getRadar(int posX, int posY, int angle, List<Ghost> ghostList) {
+        int radar = 0;
+        int distance = 0;
+
+        //System.out.printf("checkForGhost pacman is at %d %d %n",posX,posY);
+
         for (Ghost g:ghostList) {
 	    	distance = Util.getDistance(posX, posY, g.getX(), g.getY());
 	        //System.out.printf("checkForGhost at x:%d y:%d dist:%d %n",g.getX(),g.getY(),distance);
