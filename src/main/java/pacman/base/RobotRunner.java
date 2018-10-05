@@ -32,18 +32,18 @@ public class RobotRunner {
 		PacmanGraphics graphics = new PacmanGraphics();
 		graphics.setup(level);
 
-		// starting position is randomized for level 3 and above
+		// starting position is randomized for level 3
 		if (level == 3) {
 			startingPosition = ThreadLocalRandom.current().nextInt(1,5);
 		}
-		if (level == 294) {
-			startingPosition = 5;
-		}
+
 
 		driveTrainEngine.setup(startingPosition);
 		driveTrainEngine.update(Robot.driveTrain);
+
+		graphics.drawField(robot);
 		
-		while (running && !graphics.getCaught() && graphics.getTime() <= MAX_TIME) {
+		while (running && !graphics.getCaught() && graphics.getTime() < MAX_TIME) {
 			
 			// get a command from the group
 			CommandBase command = group.getCommand(currentCommand);
