@@ -91,7 +91,7 @@ public class PacmanGraphics extends Canvas{
 		dotImage = getImage("dot.png");
 		ghostImage = getImage("ghost.png");
 		
-		JFrame container = new JFrame("294 Robo Pacman");
+		JFrame container = new JFrame("294 Robo Pacman "+RobotBase.VERSION);
 		
 		JPanel panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -119,20 +119,7 @@ public class PacmanGraphics extends Canvas{
 		strategy = getBufferStrategy();
 		
 		// create the dots
-
-		if (level == 294) {
-			int x = 50;
-			for (int i=0;i<10;i++) {
-				dotList.add(new Dot(x,400));	
-				x += 50;
-			}
-			ghostList.add(new GhostVertical(150,400));
-			ghostList.add(new GhostVertical(250,400));
-			ghostList.add(new GhostVertical(350,400));
-			ghostList.add(new GhostVertical(450,400));
-		} else {
-
-		
+		if (level == 1 || level == 2 || level == 3) {
 			int x = 50;
 			for (int i=0;i<11;i++) {
 				dotList.add(new Dot(x,100));	
@@ -157,13 +144,34 @@ public class PacmanGraphics extends Canvas{
 			dotList.add(new Dot(550,350));	
 
 			// create the ghosts
-			if (level > 1) {
+			if (level == 2 || level == 3) {
 				ghostList.add(new Ghost(250,100));
 				ghostList.add(new Ghost(250,250));
 				ghostList.add(new Ghost(250,400));
 			}
 
 		}
+		
+		if (level == 4) {
+			int x = 50;
+			for (int i=0;i<10;i++) {
+				dotList.add(new Dot(x,400));	
+				x += 50;
+			}
+			ghostList.add(new GhostVertical(150,400));
+			ghostList.add(new GhostVertical(250,400));
+			ghostList.add(new GhostVertical(350,400));
+			ghostList.add(new GhostVertical(450,400));
+		} 
+		
+		if (level == 5) {
+			for (int i=1;i<=10;i++) {
+				int y = (int)(Math.random() * 6 + 1);
+				dotList.add(new Dot(i*50,(y*50)+100));	
+			}			
+		}
+		
+
 		
 	}
 	

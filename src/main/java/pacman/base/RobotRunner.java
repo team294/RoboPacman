@@ -26,7 +26,7 @@ public class RobotRunner {
 		int radar = 0;
 		int directionalRadar = 0;
 		
-		Util.log("RobotRunner:robot.robotInit version:"+robot.getVersion());
+		Util.log("RobotRunner:robot.robotInit version:"+RobotBase.VERSION);
 		robot.robotInit();
 		
 		PacmanGraphics graphics = new PacmanGraphics();
@@ -36,6 +36,8 @@ public class RobotRunner {
 		if (level == 3) {
 			startingPosition = ThreadLocalRandom.current().nextInt(1,5);
 		}
+		
+
 
 
 		driveTrainEngine.setup(startingPosition);

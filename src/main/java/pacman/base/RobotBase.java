@@ -1,6 +1,8 @@
 package pacman.base;
 
 public class RobotBase {
+	
+	public static String VERSION = "2019.0";
 
 	// subsystems
 	public static DriveTrain driveTrain = new DriveTrain();
@@ -9,7 +11,4 @@ public class RobotBase {
 	public void robotInit() {
 	}
 	
-	public String getVersion() {
-		return "1004.1";
-	}
 }
