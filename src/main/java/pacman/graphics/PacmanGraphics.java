@@ -171,8 +171,18 @@ public class PacmanGraphics extends Canvas{
 			}			
 		}
 		
-
+	}
+	
+	private int[][] getDotLocations() {
+		int[][] locations = new int[dotList.size()][2];
+		int i = 0;
+		for (Dot d:dotList) {
+			locations[i][0] = d.getX();
+			locations[i][1] = d.getY();
+			i++;
+		}
 		
+		return locations;	
 	}
 	
 	
@@ -226,6 +236,9 @@ public class PacmanGraphics extends Canvas{
 				g.drawImage(dotImage, d.getX(), d.getY(), null);
 			}
 		}	
+		
+		// update the dot sensor
+		Robot.dotSensor.setDotLocations(getDotLocations());
 		
 		// draw the ghosts and check for collisions
 		for (Iterator<Ghost> iterator = ghostList.iterator(); iterator.hasNext();) {

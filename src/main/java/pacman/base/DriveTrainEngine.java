@@ -33,7 +33,8 @@ public class DriveTrainEngine {
 		} else if (left >= 0 && left > right) {
 			// RIGHT TURN
 			if (speed == 0) {
-				angle += 90;	
+				angle += 90;
+				if (angle == 360) angle = 0;
 				Util.log("tankDrive right to angle:"+angle);
 			} else {
 				Util.log("tankDrive cant turn while moving");
@@ -41,7 +42,8 @@ public class DriveTrainEngine {
 			}
 		} else if (right >= 0 && right > left) {
 			if (speed == 0) {
-				angle -= 90;	
+				angle -= 90;
+				if (angle == -90) angle = 270;
 				Util.log("tankDrive left to angle:"+angle);
 			} else {
 				Util.log("tankDrive cant turn while moving");
@@ -52,18 +54,14 @@ public class DriveTrainEngine {
 
 		Util.log("tankDrive speed:"+speed);
 
-		// keep angle [-179,180]
-		if (angle < -179) angle += 360;
-		if (angle > 180) angle -= 360;
-
 		// update position
 		if (angle == 0) {
 			posY = posY - speed;
-		} else if (angle == 180 || angle == -180) {
+		} else if (angle == 180) {
 			posY = posY + speed;
 		} else if (angle == 90) {
 			posX = posX + speed;
-		} else if (angle == -90) {
+		} else if (angle == 270) {
 			posX = posX - speed;
 		}
 
