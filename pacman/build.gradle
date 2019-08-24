@@ -1,0 +1,15 @@
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+mainClassName = 'pacman.robot.Robot'
+
+dependencies {
+    runtime files('libs/engine.jar')
+} 
+
+repositories {
+    jcenter()
+}
