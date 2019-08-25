@@ -117,6 +117,8 @@ public class PacmanGraphics extends Canvas{
 		strategy = getBufferStrategy();
 		
 		// create the dots
+
+		// static dot layout
 		if (level == 1 || level == 2 || level == 3) {
 			int x = 50;
 			for (int i=0;i<11;i++) {
@@ -150,6 +152,7 @@ public class PacmanGraphics extends Canvas{
 
 		}
 		
+		// simple horizonal row of dots with a few ghosts that only move vertically
 		if (level == 4) {
 			int x = 50;
 			for (int i=0;i<10;i++) {
@@ -162,11 +165,26 @@ public class PacmanGraphics extends Canvas{
 			ghostList.add(new GhostVertical(450,400));
 		} 
 		
-		if (level == 5) {
+		// randomized dot layout
+		if (level == 5 || level == 6) {
 			for (int i=1;i<=10;i++) {
 				int y = (int)(Math.random() * 6 + 1);
 				dotList.add(new Dot(i*50,(y*50)+100));	
 			}			
+		}
+
+		// add in ghosts to create obstacles
+		if (level == 6) {
+			int y = 50;
+			for (int i=1;i<=7;i++) {
+				ghostList.add(new GhostNoMove(150,y));
+				y += 50;
+			}
+			y = 100;
+			for (int i=1;i<=7;i++) {
+				ghostList.add(new GhostNoMove(450,y));
+				y += 50;
+			}
 		}
 		
 	}
@@ -177,6 +195,18 @@ public class PacmanGraphics extends Canvas{
 		for (Dot d:dotList) {
 			locations[i][0] = d.getX();
 			locations[i][1] = d.getY();
+			i++;
+		}
+		
+		return locations;	
+	}
+
+	public int[][] getGhostLocations() {
+		int[][] locations = new int[ghostList.size()][2];
+		int i = 0;
+		for (Ghost g:ghostList) {
+			locations[i][0] = g.getX();
+			locations[i][1] = g.getY();
 			i++;
 		}
 		

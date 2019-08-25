@@ -7,6 +7,7 @@ public class GhostSensor {
     private int ping = 0;
     private int radar = 0;
     private int directionalRadar = 0;
+    private int[][] ghostLocations;
 
     public int getPing() {
         return ping;
@@ -40,4 +41,11 @@ public class GhostSensor {
         this.angle = angle;
     }
 
+    public void setGhostLocations(int[][] locations) {
+		this.ghostLocations = locations;
+    }
+    
+	public int[][] getGhostLocations() {
+		return this.ghostLocations;
+	}
 }

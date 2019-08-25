@@ -81,6 +81,7 @@ public class RobotRunner {
 						graphics.getGhostList());
 
 				RobotBase.ghostSensor.setPing(ping);
+				RobotBase.ghostSensor.setGhostLocations(graphics.getGhostLocations());
 
 				radar = ghostSensorEngine.getRadar(RobotBase.driveTrain.getPositionX(), 
 						RobotBase.driveTrain.getPositionY(), 
