@@ -168,13 +168,18 @@ public class PacmanGraphics extends Canvas{
 		// add in ghosts to create obstacles
 		if (level == 6) {
 			int y = 50;
-			for (int i=1;i<=7;i++) {
-				ghostList.add(new GhostNoMove(150,y));
+			int skip = (int) (Math.random() * 7) + 1;
+			System.out.println("skipping "+skip);
+			for (int i=1;i<=8;i++) {
+				if (i != skip)
+					ghostList.add(new GhostNoMove(150,y));
 				y += 50;
 			}
-			y = 100;
-			for (int i=1;i<=7;i++) {
-				ghostList.add(new GhostNoMove(450,y));
+			skip = (int) (Math.random() * 7) + 1;
+			y = 50;
+			for (int i=1;i<=8;i++) {
+				if (i != skip)
+					ghostList.add(new GhostNoMove(450,y));
 				y += 50;
 			}
 		}

@@ -16,7 +16,7 @@ public class TestCommand extends CommandBase {
 		System.out.println("dots: "+dots.length);
 
 		int angle = Robot.driveTrain.getAngle();
-		if (angle == 270) {
+		if (angle == 0) {
 			Robot.driveTrain.tankDrive(1,1);
 		} else {
 			Robot.driveTrain.tankDrive(1,0);
