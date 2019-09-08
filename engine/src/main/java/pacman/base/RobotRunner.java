@@ -68,11 +68,6 @@ public class RobotRunner {
 				running = false;
 				Util.log("RobotRunner:no commands to run");
 			} else {
-				if (runInit) {
-					Util.log("RobotRunner:initialize command "+command.getClass().getName());
-					command.initialize();
-					runInit = false;
-				}
 
 				// update all sensors before executing command
 				ping = ghostSensorEngine.getDirectionalRadar(RobotBase.driveTrain.getPositionX(), 
@@ -96,6 +91,13 @@ public class RobotRunner {
 						graphics.getGhostList());
 
 				RobotBase.ghostSensor.setDirectionalRadar(directionalRadar);
+
+				// run the commands init
+				if (runInit) {
+					Util.log("RobotRunner:initialize command "+command.getClass().getName());
+					command.initialize();
+					runInit = false;
+				}
 
 				// run the command
 				Util.log("RobotRunner:execute command "+command.getClass().getName());

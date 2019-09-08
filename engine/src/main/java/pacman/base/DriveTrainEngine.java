@@ -1,8 +1,14 @@
 package pacman.base;
 
+import pacman.graphics.PacmanGraphics;
+
 public class DriveTrainEngine {
 
 	public static int MAX_SPEED = 5;
+	public static int MAX_X = PacmanGraphics.WIDTH - 50;
+	public static int MIN_X = 50;
+	public static int MAX_Y = PacmanGraphics.HEIGHT - 50;
+	public static int MIN_Y = 50; // leave room for score at top
 	
 	private double distance = 0;
 	private int angle = 0;
@@ -55,6 +61,9 @@ public class DriveTrainEngine {
 		Util.log("tankDrive speed:"+speed);
 
 		// update position
+		int oldX = posX;
+		int oldY = posY;
+
 		if (angle == 0) {
 			posY = posY - speed;
 		} else if (angle == 180) {
@@ -65,8 +74,15 @@ public class DriveTrainEngine {
 			posX = posX - speed;
 		}
 
-		// update distance
-		distance += Math.abs(speed);
+		// make sure position stays within max and min values
+		if (posY > MAX_Y || posY < MIN_Y || posX > MAX_X || posX < MIN_X) {
+			// revert position back
+			posX = oldX; 
+			posY = oldY;
+		} else {
+			// update distance
+			distance += Math.abs(speed);
+		}
 
 		// update the drive train info with latest data
 		update(driveTrain);

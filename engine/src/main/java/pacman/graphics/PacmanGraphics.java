@@ -28,7 +28,7 @@ public class PacmanGraphics extends Canvas{
 	
 	private static final long serialVersionUID = -7506350633593738441L;
 	
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 450;
 	public static final int WIDTH = 600;
 	public static final double TICK_TIME_MS = 50;
 
@@ -164,14 +164,6 @@ public class PacmanGraphics extends Canvas{
 			ghostList.add(new GhostVertical(350,400));
 			ghostList.add(new GhostVertical(450,400));
 		} 
-		
-		// randomized dot layout
-		if (level == 5 || level == 6) {
-			for (int i=1;i<=10;i++) {
-				int y = (int)(Math.random() * 6 + 1);
-				dotList.add(new Dot(i*50,(y*50)+100));	
-			}			
-		}
 
 		// add in ghosts to create obstacles
 		if (level == 6) {
@@ -185,6 +177,18 @@ public class PacmanGraphics extends Canvas{
 				ghostList.add(new GhostNoMove(450,y));
 				y += 50;
 			}
+		}
+
+		// randomized dot layout
+		if (level == 5 || level == 6) {
+			for (int i=1;i<12;i++) {
+				double rand = Math.random()*6 + 1;
+				int y = Double.valueOf(rand).intValue()*50;
+				if (i != 3 && i != 9) {
+					dotList.add(new Dot(i*50, y));
+					System.out.println(i*50+" "+y);
+				}	
+			}	
 		}
 		
 	}
