@@ -27,9 +27,12 @@ import pacman.base.Util;
 public class PacmanGraphics extends Canvas{
 	
 	private static final long serialVersionUID = -7506350633593738441L;
-	
-	public static final int HEIGHT = 450;
-	public static final int WIDTH = 600;
+	public static final int BLOCK_SIZE = 50;
+	public static final int COLS = 12;
+	public static final int ROWS = 9;
+	public static final int HEIGHT = ROWS * BLOCK_SIZE;
+	public static final int WIDTH = COLS * BLOCK_SIZE;
+
 	public static final double TICK_TIME_MS = 50;
 
 	private int score = 0;
@@ -120,67 +123,67 @@ public class PacmanGraphics extends Canvas{
 
 		// static dot layout
 		if (level == 1 || level == 2 || level == 3) {
-			int x = 50;
+			int x = 1;
 			for (int i=0;i<11;i++) {
-				dotList.add(new Dot(x,100));	
-				dotList.add(new Dot(x,250));	
-				dotList.add(new Dot(x,400));	
-				x += 50;
+				dotList.add(new Dot(x,2));	
+				dotList.add(new Dot(x,5));	
+				dotList.add(new Dot(x,8));	
+				x += 1;
 			}
 
-			dotList.add(new Dot(50,150));
-			dotList.add(new Dot(50,200));	
-			dotList.add(new Dot(50,300));
-			dotList.add(new Dot(50,350));	
+			dotList.add(new Dot(1,3));
+			dotList.add(new Dot(1,4));	
+			dotList.add(new Dot(1,6));
+			dotList.add(new Dot(1,7));	
 			
-			dotList.add(new Dot(300,150));
-			dotList.add(new Dot(300,200));	
-			dotList.add(new Dot(300,300));
-			dotList.add(new Dot(300,350));	
+			dotList.add(new Dot(6,3));
+			dotList.add(new Dot(6,4));	
+			dotList.add(new Dot(6,6));
+			dotList.add(new Dot(6,7));	
 
-			dotList.add(new Dot(550,150));
-			dotList.add(new Dot(550,200));	
-			dotList.add(new Dot(550,300));
-			dotList.add(new Dot(550,350));	
+			dotList.add(new Dot(11,3));
+			dotList.add(new Dot(11,4));	
+			dotList.add(new Dot(11,6));
+			dotList.add(new Dot(11,7));	
 
 			// create the ghosts
 			if (level == 2 || level == 3) {
-				ghostList.add(new Ghost(250,100));
-				ghostList.add(new Ghost(250,250));
-				ghostList.add(new Ghost(250,400));
+				ghostList.add(new Ghost(5,2));
+				ghostList.add(new Ghost(5,5));
+				ghostList.add(new Ghost(5,8));
 			}
 
 		}
 		
 		// simple horizonal row of dots with a few ghosts that only move vertically
 		if (level == 4) {
-			int x = 50;
+			int x = 1;
 			for (int i=0;i<10;i++) {
-				dotList.add(new Dot(x,400));	
-				x += 50;
+				dotList.add(new Dot(x,8));	
+				x += 1;
 			}
-			ghostList.add(new GhostVertical(150,400));
-			ghostList.add(new GhostVertical(250,400));
-			ghostList.add(new GhostVertical(350,400));
-			ghostList.add(new GhostVertical(450,400));
+			ghostList.add(new GhostVertical(3,8));
+			ghostList.add(new GhostVertical(5,8));
+			ghostList.add(new GhostVertical(7,8));
+			ghostList.add(new GhostVertical(9,8));
 		} 
 
 		// add in ghosts to create obstacles
 		if (level == 6) {
-			int y = 50;
+			int y = 1;
 			int skip = (int) (Math.random() * 7) + 1;
 			System.out.println("skipping "+skip);
 			for (int i=1;i<=8;i++) {
 				if (i != skip)
-					ghostList.add(new GhostNoMove(150,y));
-				y += 50;
+					ghostList.add(new GhostNoMove(3,y));
+				y += 1;
 			}
 			skip = (int) (Math.random() * 7) + 1;
-			y = 50;
+			y = 1;
 			for (int i=1;i<=8;i++) {
 				if (i != skip)
-					ghostList.add(new GhostNoMove(450,y));
-				y += 50;
+					ghostList.add(new GhostNoMove(9,y));
+				y += 1;
 			}
 		}
 
@@ -188,10 +191,10 @@ public class PacmanGraphics extends Canvas{
 		if (level == 5 || level == 6) {
 			for (int i=1;i<12;i++) {
 				double rand = Math.random()*6 + 1;
-				int y = Double.valueOf(rand).intValue()*50;
+				int y = Double.valueOf(rand).intValue();
 				if (i != 3 && i != 9) {
-					dotList.add(new Dot(i*50, y));
-					System.out.println(i*50+" "+y);
+					dotList.add(new Dot(i, y));
+					System.out.println(i+" "+y);
 				}	
 			}	
 		}
@@ -241,7 +244,7 @@ public class PacmanGraphics extends Canvas{
 		boolean collision = false;
 		int dist = Math.abs(Util.getDistance(ghost.getX(), ghost.getY(), x, y));
 
-		if (dist < 25) {
+		if (dist < 1) {
 			System.out.printf("collision dot %s,%s pacman %s,%s dist:%s %n",ghost.getX(), ghost.getY(), x,y,dist);
 			collision = true;
 		} else {
@@ -249,6 +252,14 @@ public class PacmanGraphics extends Canvas{
 		}
 		
 		return collision;
+	}
+
+	public static int toBlock(int position) {
+		return position / BLOCK_SIZE;
+	}
+
+	public static int toPosition(int block) {
+		return block * BLOCK_SIZE;
 	}
 
 
@@ -270,7 +281,7 @@ public class PacmanGraphics extends Canvas{
 			{
 				iterator.remove();
 			} else {
-				g.drawImage(dotImage, d.getX(), d.getY(), null);
+				g.drawImage(dotImage, toPosition(d.getX()), toPosition(d.getY()), null);
 			}
 		}	
 		
@@ -288,7 +299,7 @@ public class PacmanGraphics extends Canvas{
 				Util.log("Collision with ghost!");
 				iterator.remove();
 			} else {
-				g.drawImage(ghostImage, ghost.getX(), ghost.getY(), null);
+				g.drawImage(ghostImage, toPosition(ghost.getX()), toPosition(ghost.getY()), null);
 			}
 		}			
 
@@ -303,7 +314,7 @@ public class PacmanGraphics extends Canvas{
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
 			// Drawing the rotated image at the required drawing locations
-			g.drawImage(op.filter(robotImage, null), RobotBase.driveTrain.getPositionX(), RobotBase.driveTrain.getPositionY(), null);
+			g.drawImage(op.filter(robotImage, null), toPosition(RobotBase.driveTrain.getPositionX()), toPosition(RobotBase.driveTrain.getPositionY()), null);
 
 		}
 		

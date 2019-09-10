@@ -2,7 +2,7 @@ package pacman.base;
 
 public class RobotBase {
 	
-	public static String VERSION = "2019.3";
+	public static String VERSION = "2019.4";
 
 	// subsystems
 	public static DriveTrain driveTrain = new DriveTrain();

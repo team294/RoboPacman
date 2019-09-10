@@ -4,11 +4,11 @@ import pacman.graphics.PacmanGraphics;
 
 public class DriveTrainEngine {
 
-	public static int MAX_SPEED = 5;
-	public static int MAX_X = PacmanGraphics.WIDTH - 50;
-	public static int MIN_X = 50;
-	public static int MAX_Y = PacmanGraphics.HEIGHT - 50;
-	public static int MIN_Y = 50; // leave room for score at top
+	public static int MAX_SPEED = 1;
+	public static int MAX_X = PacmanGraphics.COLS - 1;
+	public static int MIN_X = 1;
+	public static int MAX_Y = PacmanGraphics.ROWS - 1;
+	public static int MIN_Y = 1; // leave room for score at top
 	
 	private double distance = 0;
 	private int angle = 0;
@@ -86,9 +86,8 @@ public class DriveTrainEngine {
 
 		// update the drive train info with latest data
 		update(driveTrain);
-		
-		Util.log("tankDrive posX:"+posX+" posY:"+posY+" angle:"+angle+" dist:"+distance);
-		
+
+		Util.log("tankDrive angle:"+angle+" dist:"+distance+" position:("+posX+","+posY+")");
 	}	
 
 	public void update(DriveTrain driveTrain) {
@@ -96,23 +95,23 @@ public class DriveTrainEngine {
 	}
 
 	public void setup(int startingPosition) {
-		posY =500;
+		posY =10;
 
 		if (startingPosition == 1) {
-			posX = 50;
-			posY = 100;
+			posX = 1;
+			posY = 2;
 		}
 		if (startingPosition == 2) {
-			posX = 550;
-			posY = 100;
+			posX = 11;
+			posY = 2;
 		}
 		if (startingPosition == 3) {
-			posX = 50;
-			posY = 400;
+			posX = 1;
+			posY = 8;
 		}
 		if (startingPosition == 4) {
-			posX = 550;
-			posY = 400;
+			posX = 11;
+			posY = 8;
 		}	
 
 	}
