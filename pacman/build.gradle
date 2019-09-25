@@ -7,7 +7,7 @@ plugins {
 mainClassName = 'pacman.robot.Robot'
 
 dependencies {
-    runtime files('libs/engine.jar')
+    compile files('libs/engine.jar')
 } 
 
 repositories {
