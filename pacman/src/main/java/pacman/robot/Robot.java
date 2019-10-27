@@ -20,7 +20,7 @@ public class Robot extends RobotBase {
 
 		// run the command group
 		robotRunner.run(robot, new AutoGroup(), RUN_NORMAL,1);
-
+		
 	}
 
 }

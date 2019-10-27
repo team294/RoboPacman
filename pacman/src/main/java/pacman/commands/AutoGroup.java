@@ -5,7 +5,8 @@ import pacman.base.CommandGroupBase;
 public class AutoGroup extends CommandGroupBase{
 	
 	public AutoGroup() {
-		addSequential(new SpinForever());  
+		addSequential(new pacman()); 
+		pacman.class.move(10);
+		pacman.class.execute();
 	} 
-	
 }

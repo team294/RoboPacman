@@ -3,7 +3,7 @@ package pacman.commands;
 import pacman.base.CommandBase;
 import pacman.robot.Robot;
 
-public class SpinForever extends CommandBase {
+public class pacman extends CommandBase {
 
 	@Override
 	protected void initialize() {
@@ -14,11 +14,13 @@ public class SpinForever extends CommandBase {
 	protected void execute() {
 		Robot.driveTrain.tankDrive(1, 0);
 	}
-	
+	@Override
+	protected void move(m) {
+		Robot.driveTrain.tankDrive(m, m);
+	}
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 }
-
