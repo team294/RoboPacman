@@ -1,15 +1,19 @@
 package pacman.commands;
 
+//import com.sun.tools.javac.jvm.Target;
+
 import pacman.base.CommandBase;
 import pacman.robot.Robot;
 
 public class DriveStraight extends CommandBase {
 private double initial;
-private double target=6; 
+private double target; 
+public DriveStraight(double dot) {
+	target = dot;
+}
 	@Override
 	protected void initialize() {
-	initial= Robot.driveTrain.getDistance();	
-
+		initial = Robot.driveTrain.getDistance();
 	}
 
 	@Override
