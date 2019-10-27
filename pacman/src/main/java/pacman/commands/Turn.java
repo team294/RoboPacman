@@ -9,7 +9,7 @@ public class Turn extends CommandBase {
 	//private int distance;
 	public Turn(int angle){
 		//this.distance=distance;
-		target=start+angle;
+		this.target=start+angle;
 	}
 	
 	@Override

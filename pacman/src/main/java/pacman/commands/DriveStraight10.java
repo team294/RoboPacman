@@ -4,8 +4,8 @@ import pacman.base.CommandBase;
 import pacman.robot.Robot;
 
 public class DriveStraight10 extends CommandBase {
-	private int start;
-	private int target;
+	private static int start;
+	private static int target;
 	//private int distance;
 	public DriveStraight10(int distance){
 		//this.distance=distance;
@@ -26,10 +26,9 @@ public class DriveStraight10 extends CommandBase {
 	
 	@Override
 	protected boolean isFinished() {
-		if( target == Robot.driveTrain.getPositionY()){
+		if(target == Robot.driveTrain.getPositionY()){
 			return true;
-		}
-		return false;
+		} else return false;
 	}
 
 }
