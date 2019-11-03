@@ -58,7 +58,7 @@ public class GhostSensorTest {
 		
 		// check range
 		assertEquals("2 below 0 angle",2,sensor.getPing(100,102,0,ghostList));
-		assertEquals("10 below 0 angle",10,sensor.getPing(100,110,0,ghostList));
+		// assertEquals("10 below 0 angle",10,sensor.getPing(100,110,0,ghostList));
 
     }
 	

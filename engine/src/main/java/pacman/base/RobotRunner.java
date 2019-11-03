@@ -3,6 +3,7 @@ package pacman.base;
 import java.util.concurrent.ThreadLocalRandom;
 
 import pacman.graphics.PacmanGraphics;
+import pacman.print.StatusPrinter;
 
 public class RobotRunner {
 
@@ -108,6 +109,7 @@ public class RobotRunner {
 			}
 
 			graphics.drawField(robot);
+			StatusPrinter.print();
 
 			// add a little delay to make it look better
 			try {
