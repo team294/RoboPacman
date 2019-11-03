@@ -12,7 +12,7 @@ public class goFoward extends CommandBase {
 	protected void execute(int number1, int number2) {
 		Robot.driveTrain.tankDrive(number1, number2);
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
 		return true;
