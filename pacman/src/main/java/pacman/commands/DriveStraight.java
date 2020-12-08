@@ -1,7 +1,5 @@
 package pacman.commands;
 
-import java.util.concurrent.atomic.DoubleAccumulator;
-
 import pacman.base.CommandBase;
 import pacman.robot.Robot;
 
