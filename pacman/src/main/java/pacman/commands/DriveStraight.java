@@ -7,6 +7,7 @@ public class DriveStraight extends CommandBase {
 	
 	private double targetDistance;
 	private double startDistance;
+	private double currentDistance;
 	
 	public DriveStraight(double distance) {
 		// save the target distance for later
@@ -17,12 +18,13 @@ public class DriveStraight extends CommandBase {
 	protected void initialize() {
 		// save the starting point for later
 		startDistance = Robot.driveTrain.getDistance();
+		currentDistance = 0;
 	}
 
 	@Override
 	protected void execute() {
 		// calc distance traveled since this command started
-		double currentDistance = Robot.driveTrain.getDistance() - startDistance;
+		currentDistance = Robot.driveTrain.getDistance() - startDistance;
 		
 		// if we have gone far enough then stop
 		if (currentDistance >= targetDistance) {
@@ -34,7 +36,7 @@ public class DriveStraight extends CommandBase {
 
 	@Override
 	protected boolean isFinished() {
-		return (Robot.driveTrain.getDistance() >= targetDistance) ? true : false;
+		return (currentDistance >= targetDistance) ? true : false;
 	}
 
 }
