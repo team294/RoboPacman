@@ -7,6 +7,7 @@ public class AStar {
     private Coord goal;
     private boolean finished = false;
     private Node[] points;
+    private int steps;
     private Coord[] path;
     private Field field;
 
@@ -14,8 +15,20 @@ public class AStar {
     public AStar(Field field, Coord start, Coord goal) {
         this.field = field;
         this.goal = goal;
+        this.path = new Coord[field.length + field.height];
+        this.steps = 0;
         points = new Node[field.length * field.height];
-        points[0] = new Node(start, goal, currDist, field);
+        points[steps] = new Node(start, goal, currDist, field);
+    }
+
+    private int findCoordArrLength(Coord[] arr) {
+        int length = 0;
+        for (Coord x: arr) {
+            if (x.exists()) {
+                length++;
+            }
+        }
+        return length;
     }
 
     private Coord[] findNeighbors(Node m) {
@@ -23,6 +36,7 @@ public class AStar {
     }
 
     public Coord[] calculate() {
+        Node parent;
         while(!finished) {
             Node current = new Node();
             for (Node point: points) {
@@ -41,7 +55,17 @@ public class AStar {
                 break;
             }
 
-            for (findNeighbors())
+            for (Coord x: findNeighbors(current)) {
+                Node xNode = new Node(x, goal, currDist, field);
+                if (xNode.traversable || !xNode.CLOSED) {
+                    for (Coord neighboors: findNeighbors(xNode) {
+                        if (true) {
+                            points[steps] = xNode;
+                            steps++; // Try later: put steps++ into points[steps], so it says points[steps++]
+                        }
+                    }
+                }
+            }
 
         }
         return path;

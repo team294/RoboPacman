@@ -27,6 +27,8 @@ public class Node extends Coord {
                 traversable = false;
             } 
         }
-        if ()
+        if (point.x < field.minX || point.x > field.maxX || point.y < field.minY || point.y > field.maxY) {
+            traversable = false;
+        }
     }
 }

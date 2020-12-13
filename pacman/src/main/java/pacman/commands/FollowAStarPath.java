@@ -5,8 +5,6 @@ import pacman.robot.Robot;
 
 import java.util.Arrays;
 
-import pacman.base.CommandBase;
-import pacman.robot.Robot;
 import pacman.subsystems.Coord;
 import pacman.subsystems.astar.Field;
 import pacman.subsystems.astar.AStar;
@@ -66,7 +64,7 @@ public class FollowAStarPath extends CommandBase {
         
         AStar path = new AStar(field, robotCoords, nextTarget);
 
-        follow(path.calculate());
+        follow(path.calculate()[0]);
 
 		System.out.println("Robot Coords: " + Coord.toString(robotCoords));
 		System.out.println("Closest Ball: " + Coord.toString(nextTarget));

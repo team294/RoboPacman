@@ -20,7 +20,10 @@ public class Field {
         this.obstacles = obstacles;
     }
 
-    public void setMins(int minX, maxX, minY, maxY) {
-        
+    public void setMins(int minX, int maxX, int minY, int maxY) {
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
     }
 }
