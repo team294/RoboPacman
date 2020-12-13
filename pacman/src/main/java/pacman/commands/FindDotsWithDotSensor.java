@@ -7,22 +7,24 @@ public class FindDotsWithDotSensor extends CommandBase {
 	
 	@Override
 	protected void execute() {
-		int targetX = 0;
-		int targetY = 0;
+		// get all the dots from the sensor
 		int[][] dotLocations = Robot.dotSensor.getDotLocations();
 		
 		// find a dot (should get the closest but this will do for now)
 		System.out.println("dot "+dotLocations[0][0]+" "+dotLocations[0][1]);
-		targetX = dotLocations[0][0];
-		targetY = dotLocations[0][1];
+		int targetX = dotLocations[0][0];
+		int targetY = dotLocations[0][1];
+
+		// if facing up/down then drive forward until Y coord is correct
+		// if facing left/right then drive forward until X coord is correct
+		// if it is already correct then turn to go the other direction
 		
 		// up
 		if (Robot.driveTrain.getAngle() == 0) {
 			if (targetY < Robot.driveTrain.getPositionY()) {
 				Robot.driveTrain.tankDrive(1,1);
-			}
-			if (targetY >= Robot.driveTrain.getPositionY()) {
-				Robot.driveTrain.tankDrive(1,0);
+			} else {
+				Robot.driveTrain.tankDrive(1,-1);
 			}
 		}
 		
@@ -30,9 +32,8 @@ public class FindDotsWithDotSensor extends CommandBase {
 		if (Robot.driveTrain.getAngle() == 180) {
 			if (targetY > Robot.driveTrain.getPositionY()) {
 				Robot.driveTrain.tankDrive(1,1);
-			}
-			if (targetY <= Robot.driveTrain.getPositionY()) {
-				Robot.driveTrain.tankDrive(1,0);
+			} else {
+				Robot.driveTrain.tankDrive(1,-1);
 			}
 		}
 
@@ -40,9 +41,8 @@ public class FindDotsWithDotSensor extends CommandBase {
 		if (Robot.driveTrain.getAngle() == 270) {
 			if (targetX < Robot.driveTrain.getPositionX()) {
 				Robot.driveTrain.tankDrive(1,1);
-			}
-			if (targetX >= Robot.driveTrain.getPositionX()) {
-				Robot.driveTrain.tankDrive(1,0);
+			} else {
+				Robot.driveTrain.tankDrive(1,-1);
 			}
 		}
 		
@@ -50,12 +50,10 @@ public class FindDotsWithDotSensor extends CommandBase {
 		if (Robot.driveTrain.getAngle() == 90) {
 			if (targetX > Robot.driveTrain.getPositionX()) {
 				Robot.driveTrain.tankDrive(1,1);
-			}
-			if (targetX <= Robot.driveTrain.getPositionX()) {
-				Robot.driveTrain.tankDrive(1,0);
+			} else {
+				Robot.driveTrain.tankDrive(1,-1);
 			}
 		}
-		
 	}
 	
 	@Override
