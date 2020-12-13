@@ -3,7 +3,7 @@ package pacman.commands;
 import pacman.base.CommandGroupBase;
 import pacman.base.GhostSensor;
 
-public class AutoGroup extends CommandGroupBase{
+public class AutoGroup extends CommandGroupBase {
 	
 	public AutoGroup() {
 		// addSequential(new SpinForever());
