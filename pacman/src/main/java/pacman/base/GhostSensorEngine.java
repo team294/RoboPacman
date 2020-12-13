@@ -24,7 +24,7 @@ public class GhostSensorEngine {
             if (angle == 180 && checkForGhost(posX, posY+range, ghostList)) {
                 ping = range;
             }
-            if (angle == -90 && checkForGhost(posX-range, posY, ghostList)) {
+            if (angle == 270 && checkForGhost(posX-range, posY, ghostList)) {
                 ping = range;
             }
         }
@@ -56,16 +56,16 @@ public class GhostSensorEngine {
         //filter out ghosts that are not in range based on angle
         List<Ghost> ghostsToCheck = new ArrayList<Ghost>();
         for (Ghost g:ghostList) {
-            if (angle == -90 && g.getX() < posX) {
+            if ((angle == 270) && (g.getX() < posX) && (g.getY() == posY)) {
                 ghostsToCheck.add(g);
             }
-            if (angle == 90 && g.getX() > posX) {
+            if ((angle == 90) && (g.getX() > posX) && (g.getY() == posY)) {
                 ghostsToCheck.add(g);
             }
-            if (angle == 0 && g.getY() < posY) {
+            if ((angle == 0) && (g.getY() < posY) && (g.getX() == posX)) {
                 ghostsToCheck.add(g);
             }
-            if (angle == 180 && g.getY() > posY) {
+            if ((angle == 180) && (g.getY() > posY) && (g.getX() == posX)) {
                 ghostsToCheck.add(g);
             }
         }
@@ -88,7 +88,7 @@ public class GhostSensorEngine {
 	    	}
         }
         
-        //System.out.printf("checkForGhost radar is %d %n",radar);
+        //System.out.printf("checkForGhost directionalRadar is %d %n",radar);
         
         return radar;
     } 

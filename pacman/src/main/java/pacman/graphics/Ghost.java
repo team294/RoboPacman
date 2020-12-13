@@ -37,9 +37,11 @@ public class Ghost {
 			duration--;
 		}
 
+		// ghosts only move horizontally
 		next = getX()+direction;
 
-		if (next >= 1 && next < PacmanGraphics.COLS) setX(next);
+		// don't limit ghosts position so they can move off the screen and then come
+		setX(next);
 	}
 
 }
