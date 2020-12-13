@@ -8,9 +8,8 @@ public class Robot extends RobotBase {
 
 	public static long RUN_NORMAL = 250;
 	public static long RUN_FAST = 50;
-	public static long RUN_SLOW = 500;
+	public static long RUN_SLOW = 150;
 
-	
 	public static void main(String[] args) {
 
 		// create a robot runner
@@ -20,10 +19,10 @@ public class Robot extends RobotBase {
 		Robot robot = new Robot();
 
 		// run the command group
-		robotRunner.run(robot, new AutoGroup(), RUN_SLOW, 1);
+		// robotRunner.run(robot, new AutoGroup(), RUN_SLOW, 1);
 
 		 // master
-		//robotRunner.run(robot, new AutoGroup(), RUN_NORMAL,2);
+		robotRunner.run(robot, new AutoGroup(), RUN_NORMAL,2);
 
 
 	}

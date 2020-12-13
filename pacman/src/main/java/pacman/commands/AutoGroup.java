@@ -7,11 +7,6 @@ public class AutoGroup extends CommandGroupBase{
 	public AutoGroup() {
 		// addSequential(new SpinForever());
 
-		// addSequential(new SpinOnce());
-		// MoveForward mymove=new MoveForward();
-		// mymove.setMoveStep(4);
-		// addSequential(mymove);
-
 
 		addSequential(new MoveForward(3));
 		addSequential(new Turn(270));
