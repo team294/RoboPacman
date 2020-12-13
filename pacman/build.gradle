@@ -6,10 +6,6 @@ plugins {
 
 mainClassName = 'pacman.robot.Robot'
 
-dependencies {
-    compile files('libs/engine.jar')
-} 
-
 repositories {
     jcenter()
 }

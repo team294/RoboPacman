@@ -6,9 +6,10 @@ import pacman.commands.*;
 
 public class Robot extends RobotBase {
 
-	public static long RUN_NORMAL = 50;
-	public static long RUN_FAST = 10;
-	public static long RUN_SLOW = 100;
+	public static long RUN_NORMAL = 250;
+	public static long RUN_FAST = 50;
+	public static long RUN_SLOW = 500;
+
 	
 	public static void main(String[] args) {
 
@@ -20,6 +21,10 @@ public class Robot extends RobotBase {
 
 		// run the command group
 		robotRunner.run(robot, new AutoGroup(), RUN_SLOW, 1);
+
+		 // master
+		//robotRunner.run(robot, new AutoGroup(), RUN_NORMAL,2);
+
 
 	}
 
