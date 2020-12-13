@@ -6,29 +6,44 @@ public class AStar {
     private int currDist = 0;
     private Coord goal;
     private boolean finished = false;
-    private Node[] OPEN;
-    private Node[] CLOSED;
-    private Node[] path;
+    private Node[] points;
+    private Coord[] path;
+    private Field field;
 
 
     public AStar(Field field, Coord start, Coord goal) {
-        // this.start = start;
+        this.field = field;
         this.goal = goal;
-        OPEN = new Node[field.length * field.height];
-        CLOSED = new Node[field.length * field.height];
-        OPEN[0] = new Node(start, goal, currDist);
+        points = new Node[field.length * field.height];
+        points[0] = new Node(start, goal, currDist, field);
     }
 
-    public Coord calculate() {
+    private Coord[] findNeighbors(Node m) {
+        return new Coord[] {new Coord(m.x-1, m.y),new Coord(m.x+1, m.y),new Coord(m.x, m.y-1),new Coord(m.x, m.y+1)};
+    }
+
+    public Coord[] calculate() {
         while(!finished) {
-            Node current = OPEN[0];
-            for (Node point: OPEN) {
-                current = current.f < point.f ? current : point;
+            Node current = new Node();
+            for (Node point: points) {
+                if (point.OPENED) {
+                    current = point.f < current.f ? point : current;
+                }
+            }
+            for (Node point: points) {
+                if (point == current) {
+                    point.OPENED = false;
+                    point.CLOSED = true;
+                }
             }
             if (current.coord == goal) {
-                
+                finished = true;
+                break;
             }
+
+            for (findNeighbors())
+
         }
-        return new Coord(0, 0);
+        return path;
     }
 }

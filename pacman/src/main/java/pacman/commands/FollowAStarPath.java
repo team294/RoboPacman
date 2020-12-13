@@ -14,10 +14,8 @@ import pacman.subsystems.astar.AStar;
 public class FollowAStarPath extends CommandBase {
     private Coord[] dotLocations;
 	private Coord[] ghostLocations;
-	private Coord[] prevGhostPos;
 	private Coord robotCoords = new Coord();
 	private Coord nextTarget;
-    private Coord closestGhost;
     private Field field; //TODO set field value */
     
     private void goStraightOrTurn(int desiredAngle) {
@@ -55,7 +53,6 @@ public class FollowAStarPath extends CommandBase {
 		System.out.println("FollowAStarPath.initialize");
 		this.dotLocations =  Coord.intArrToCoord(Robot.dotSensor.getDotLocations());
 		this.ghostLocations =  Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
-		this.prevGhostPos = this.ghostLocations;
 		this.robotCoords.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 	}
 
@@ -65,8 +62,7 @@ public class FollowAStarPath extends CommandBase {
 		ghostLocations = Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
 		robotCoords.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 		nextTarget = robotCoords.closestTo(dotLocations);
-		closestGhost = robotCoords.closestTo(ghostLocations);
-        prevGhostPos = ghostLocations;
+        field.update(ghostLocations);
         
         AStar path = new AStar(field, robotCoords, nextTarget);
 
