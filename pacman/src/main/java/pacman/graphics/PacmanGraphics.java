@@ -33,7 +33,7 @@ public class PacmanGraphics extends Canvas{
 	public static final int HEIGHT = ROWS * BLOCK_SIZE;
 	public static final int WIDTH = COLS * BLOCK_SIZE;
 
-	public static final double TICK_TIME_MS = 50;
+	public static final double TICK_TIME_MS = 250;
 
 	private int score = 0;
 	private int ticks = 0;
@@ -316,6 +316,9 @@ public class PacmanGraphics extends Canvas{
 			// Drawing the rotated image at the required drawing locations
 			g.drawImage(op.filter(robotImage, null), toPosition(RobotBase.driveTrain.getPositionX()), toPosition(RobotBase.driveTrain.getPositionY()), null);
 
+		} else {
+			g.setColor(Color.red);
+			g.drawString("GAME OVER",25,50);
 		}
 		
 		g.setColor(Color.white);
