@@ -8,7 +8,8 @@ public class AutoGroup extends CommandGroupBase{
 	public AutoGroup() {
 		// addSequential(new SpinForever());
 
-		addSequential(new FindDots());
+		// addSequential(new FindDots());
+		addSequential(new CondensedFindDots());
 
 		// level 1
 		// addSequential(new DriveStraight(3)); 
