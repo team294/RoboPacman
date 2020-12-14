@@ -11,6 +11,11 @@ public class AStar {
     private Coord[] path;
     private Field field;
 
+    // make array with Nodes for every position in field
+    // give Node constructor w/out f cost
+    //    give func to set f cost
+    // last 5 lines still needed https://www.youtube.com/watch?v=-L-WgKMFuhE&t=506s
+
 
     public AStar(Field field, Coord start, Coord goal) {
         this.field = field;
