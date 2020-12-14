@@ -8,39 +8,39 @@ public class AutoGroup extends CommandGroupBase{
 		// addSequential(new SpinForever());
 
 
-		addSequential(new MoveForward(3));
+		addSequential(new MoveForwardAvoidGhosts(3));
 		addSequential(new Turn(270));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 		addSequential(new Turn(180));
-		addSequential(new MoveForward(4));
+		addSequential(new MoveForwardAvoidGhosts(4));
 
 		addSequential(new Turn(270));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 		addSequential(new Turn(0));
-		addSequential(new MoveForward(3));
+		addSequential(new MoveForwardAvoidGhosts(3));
 
 		addSequential(new Turn(90));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 		addSequential(new Turn(0));
-		addSequential(new MoveForward(3));
+		addSequential(new MoveForwardAvoidGhosts(3));
 
 		addSequential(new Turn(270));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 		addSequential(new Turn(180));
-		addSequential(new MoveForward(3));
+		addSequential(new MoveForwardAvoidGhosts(3));
 
 		addSequential(new Turn(90));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 		addSequential(new Turn(0));
-		addSequential(new MoveForward(3));
+		addSequential(new MoveForwardAvoidGhosts(3));
 
 		addSequential(new Turn(90));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 		addSequential(new Turn(180));
-		addSequential(new MoveForward(7));
+		addSequential(new MoveForwardAvoidGhosts(7));
 
 		addSequential(new Turn(270));
-		addSequential(new MoveForward(5));
+		addSequential(new MoveForwardAvoidGhosts(5));
 	} 
 	
 }

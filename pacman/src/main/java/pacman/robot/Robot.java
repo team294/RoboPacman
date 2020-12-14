@@ -2,6 +2,7 @@ package pacman.robot;
 
 import pacman.base.RobotBase;
 import pacman.base.RobotRunner;
+
 import pacman.commands.*;
 
 public class Robot extends RobotBase {
@@ -22,7 +23,7 @@ public class Robot extends RobotBase {
 		// robotRunner.run(robot, new AutoGroup(), RUN_SLOW, 1);
 
 		 // master
-		robotRunner.run(robot, new AutoGroup(), RUN_NORMAL,2);
+		robotRunner.run(robot, new AutoGroup(), RUN_SLOW, 2);
 
 
 	}

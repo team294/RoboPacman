@@ -19,7 +19,7 @@ public class MoveForward extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		System.out.println("MoveForward.initialize");
+		// System.out.println("MoveForward.initialize");
 	}
 
 	@Override

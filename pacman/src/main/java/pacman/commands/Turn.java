@@ -20,7 +20,7 @@ public class Turn extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		System.out.println("Turn.initialize");
+		// System.out.println("Turn.initialize");
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public class SpinOnce extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		System.out.println("SpinOnce.initialize");
+		// System.out.println("SpinOnce.initialize");
 	}
 
 	@Override
