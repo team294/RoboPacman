@@ -1,7 +1,5 @@
 package pacman.commands;
 
-import javax.print.event.PrintJobListener;
-
 import pacman.base.CommandBase;
 import pacman.robot.Robot;
 

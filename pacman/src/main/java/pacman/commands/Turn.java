@@ -9,8 +9,11 @@ public class Turn extends CommandBase {
     int currentDir;
     int desiredDir;
 
-    public Turn(int angle) {
-        this.angle = angle;
+    public Turn(String dir) {
+        if (dir.equals("up")) this.angle = 0;
+        else if (dir.equals("left")) this.angle = 270;
+        else if (dir.equals("right")) this.angle = 90;
+        else if (dir.equals("down")) this.angle = 180;
     }
 
     @Override
