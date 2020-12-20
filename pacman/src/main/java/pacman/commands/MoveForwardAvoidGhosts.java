@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class MoveForwardAvoidGhosts extends CommandBase {
 	int moveStep;  // steps you want to move forward
-	int numStepsMoved = 0;
+	int numStepsMoved;
 
 	// new constructor
 	public MoveForwardAvoidGhosts(int step) {
@@ -20,6 +20,8 @@ public class MoveForwardAvoidGhosts extends CommandBase {
 
 	@Override
 	protected void initialize() {
+		// count how many steps it moved used to compare the moveStep
+		numStepsMoved = 0;
 		// System.out.println("MoveForward.initialize");
 	}
 
@@ -43,9 +45,11 @@ public class MoveForwardAvoidGhosts extends CommandBase {
 		if (ping == 0) {
 			// no ghosts ahead drive forward
 			Robot.driveTrain.tankDrive(1, 1);
+			numStepsMoved += 1;
 		} else {
 			// ghost ahead drive backward
 			Robot.driveTrain.tankDrive(-1, -1);
+			numStepsMoved -= 1;
 		}
 	}
 	
@@ -53,7 +57,7 @@ public class MoveForwardAvoidGhosts extends CommandBase {
 	protected boolean isFinished() {
 		boolean isComplete = false;
 
-		numStepsMoved += 1;
+		// numStepsMoved += 1;
 		if (numStepsMoved >= moveStep){
 			isComplete = true;
 		}
