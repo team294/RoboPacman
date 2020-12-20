@@ -64,7 +64,7 @@ public class FollowAStarPath extends CommandBase {
         
         AStar path = new AStar(field, robotCoords, nextTarget);
 
-        follow(path.calculate()[0]);
+        // follow(path.calculate()[0]);
 
 		System.out.println("Robot Coords: " + Coord.toString(robotCoords));
 		System.out.println("Closest Ball: " + Coord.toString(nextTarget));

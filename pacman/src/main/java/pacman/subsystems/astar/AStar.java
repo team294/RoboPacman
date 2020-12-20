@@ -3,12 +3,9 @@ package pacman.subsystems.astar;
 import pacman.subsystems.Coord;
 
 public class AStar {
-    private int currDist = 0;
     private Coord goal;
     private boolean finished = false;
-    private Node[] points;
-    private int steps;
-    private Coord[] path;
+    private Node[][] points;
     private Field field;
 
     // make array with Nodes for every position in field
@@ -19,40 +16,44 @@ public class AStar {
 
     public AStar(Field field, Coord start, Coord goal) {
         this.field = field;
+        Node.setField(this.field);
         this.goal = goal;
-        this.path = new Coord[field.length + field.height];
-        this.steps = 0;
-        points = new Node[field.length * field.height];
-        points[steps] = new Node(start, goal, currDist, field);
-    }
-
-    private int findCoordArrLength(Coord[] arr) {
-        int length = 0;
-        for (Coord x: arr) {
-            if (x.exists()) {
-                length++;
-            }
-        }
-        return length;
+        points = field.coords;
+        System.out.println("Start: " + start.x + ", " + start.y);
+        System.out.println("Goal: " + goal.x + ", " + goal.y);
+        points[start.y][start.x].setF(goal, 0);
+        points[start.y][start.x].open();
+        points[start.y][start.x].setLength(0);
+        System.out.println("Start Opened? " + points[start.y][start.x].OPENED);
+        System.out.println("Start F: " + points[start.y][start.x].f);
     }
 
     private Coord[] findNeighbors(Node m) {
-        return new Coord[] {new Coord(m.x-1, m.y),new Coord(m.x+1, m.y),new Coord(m.x, m.y-1),new Coord(m.x, m.y+1)};
+        return new Coord[] {new Coord(m.coord.x-1, m.coord.y), new Coord(m.coord.x+1, m.coord.y), new Coord(m.coord.x, m.coord.y-1), new Coord(m.coord.x, m.coord.y+1)};
     }
 
-    public Coord[] calculate() {
-        Node parent;
+    public Node calculate() {
+        Node current = new Node();
         while(!finished) {
-            Node current = new Node();
-            for (Node point: points) {
-                if (point.OPENED) {
-                    current = point.f < current.f ? point : current;
-                }
+            Node lowest = new Node();
+            for (Node[] row: points) {
+                for (Node point: row) {
+                    if (point.OPENED) {
+                        // System.out.println("Point f: " + point.f);
+                        // System.out.println("Current f: " + current.f);
+                        if (point.f < lowest.f) {
+                            current = point;
+                        }
+                        // System.out.println("Updated f: " + current.f);
+                    }
+                }   
             }
-            for (Node point: points) {
-                if (point == current) {
-                    point.OPENED = false;
-                    point.CLOSED = true;
+            for (Node[] row: points) {
+                for (Node point: row) {
+                    if (point == current) {
+                        System.out.println("Closing point: " + Coord.toString(current.coord));
+                        point.close();
+                    }
                 }
             }
             if (current.coord == goal) {
@@ -61,18 +62,35 @@ public class AStar {
             }
 
             for (Coord x: findNeighbors(current)) {
-                Node xNode = new Node(x, goal, currDist, field);
-                if (xNode.traversable || !xNode.CLOSED) {
-                    for (Coord neighboors: findNeighbors(xNode) {
-                        if (true) {
-                            points[steps] = xNode;
-                            steps++; // Try later: put steps++ into points[steps], so it says points[steps++]
-                        }
+                Node xNode = new Node(x);
+                xNode.setF(goal, current.pathLength+1);
+                if (xNode.traversable) {
+                    if (!xNode.CLOSED) {
+                        xNode.setLength(current.pathLength+1);
+                        xNode.setParent(current);
+                        xNode.open();
+                        points[x.y][x.x] = xNode;
                     }
                 }
             }
-
+            String str = "";
+            for (Node[] row: points) {
+                for (Node point: row) {
+                    if (point == current) {
+                        str += "n";
+                    } else if (point.CLOSED) {
+                        str += "c";
+                    } else if (point.OPENED) {
+                        str += "o";
+                    } else {
+                        str += "x";
+                    }
+                    str += " ";
+                }   
+                str += "\n";
+            }
+            System.out.println(str);
         }
-        return path;
+        return current;
     }
 }

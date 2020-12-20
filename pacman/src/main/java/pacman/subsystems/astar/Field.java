@@ -13,7 +13,7 @@ public class Field {
         this.height = height;
         this.obstacles = obstacles;
         this.coords = new Node[height][length];
-        setCoords();
+        this.setCoords();
         this.minX = 0;
         this.minY = 0;
         this.maxX = length;
@@ -23,7 +23,7 @@ public class Field {
     public void setCoords() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < height; col++) {
-
+                coords[row][col] = new Node(new Coord(col, row));
             }
         }
     }
