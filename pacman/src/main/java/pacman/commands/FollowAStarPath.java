@@ -8,13 +8,14 @@ import java.util.Arrays;
 import pacman.subsystems.Coord;
 import pacman.subsystems.astar.Field;
 import pacman.subsystems.astar.AStar;
+import pacman.subsystems.astar.Node;
 
 public class FollowAStarPath extends CommandBase {
     private Coord[] dotLocations;
 	private Coord[] ghostLocations;
 	private Coord robotCoords = new Coord();
 	private Coord nextTarget;
-    private Field field; //TODO set field value */
+    private Field field;
     
     private void goStraightOrTurn(int desiredAngle) {
 		if (Robot.driveTrain.getAngle() == desiredAngle) {
@@ -52,6 +53,8 @@ public class FollowAStarPath extends CommandBase {
 		this.dotLocations =  Coord.intArrToCoord(Robot.dotSensor.getDotLocations());
 		this.ghostLocations =  Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
 		this.robotCoords.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
+
+		this.field = new Field(11, 8, this.ghostLocations);
 	}
 
 	@Override
@@ -61,10 +64,21 @@ public class FollowAStarPath extends CommandBase {
 		robotCoords.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 		nextTarget = robotCoords.closestTo(dotLocations);
         field.update(ghostLocations);
-        
-        AStar path = new AStar(field, robotCoords, nextTarget);
+		
+		AStar route = new AStar(field, robotCoords, nextTarget);
+		Node res = route.calculate();
 
-        // follow(path.calculate()[0]);
+		Coord nextLocation = robotCoords;
+
+		Node last = res;
+		for (int i = 0; i < res.pathLength; i++) {
+			if (last.pathLength == 1) {
+				nextLocation = last;
+			} else {
+				last = last.parent;
+			}
+		}
+        follow(nextLocation);
 
 		System.out.println("Robot Coords: " + Coord.toString(robotCoords));
 		System.out.println("Closest Ball: " + Coord.toString(nextTarget));

@@ -5,7 +5,7 @@ import pacman.base.CommandGroupBase;
 public class AutoGroup extends CommandGroupBase{
 	
 	public AutoGroup() {
-		addSequential(new FindDots());  
+		addSequential(new AStarPathTest());  
 	} 
 	
 }
