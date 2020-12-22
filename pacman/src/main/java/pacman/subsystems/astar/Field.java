@@ -22,7 +22,7 @@ public class Field {
 
     public void setCoords() {
         for (int row = 0; row < height; row++) {
-            for (int col = 0; col < height; col++) {
+            for (int col = 0; col < length; col++) {
                 coords[row][col] = new Node(new Coord(col, row));
             }
         }

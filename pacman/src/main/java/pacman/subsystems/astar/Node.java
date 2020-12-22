@@ -16,19 +16,13 @@ public class Node extends Coord {
     }
     public Node(Coord point) {
         this.coord = point;
+        // checkIfTraversable(field.obstacles);
     }
     public Node(Coord point, Coord goalPos, int h) {
         this.coord = point;
         this.f = (int) point.distance(goalPos)*10 + h;
         this.traversable = true;
-        for (Coord obstacle: field.obstacles) {
-            if (obstacle == point) {
-                traversable = false;
-            } 
-        }
-        if (point.x < Node.field.minX || point.x >= Node.field.maxX || point.y < Node.field.minY || point.y >= Node.field.maxY) {
-            traversable = false;
-        }
+        // checkIfTraversable(field.obstacles);
     }
     public void setLength(int length) {
         this.pathLength = length;
@@ -45,20 +39,23 @@ public class Node extends Coord {
         this.OPENED = false;
     }
     public void setF(Coord goalPos, int h) {
-        this.f = (int) this.coord.distance(goalPos)*10 + h;
+        this.pathLength = h;
+        this.f = (int) this.coord.distance(goalPos)*10 + h*10;
         this.traversable = true;
-        for (Coord obstacle: field.obstacles) {
-            if (obstacle == this.coord) {
-                traversable = false;
-            } 
-        }
-        if (this.coord.x < Node.field.minX || this.coord.x >= Node.field.maxX || this.coord.y < Node.field.minY || this.coord.y >= Node.field.maxY) {
-            traversable = false;
+        checkIfTraversable(field.obstacles);
+    }
+    private void checkIfTraversable(Coord[] obstacles) {
+        if (obstacles != null) {
+            for (Coord obstacle: obstacles) {
+                if (obstacle == this.coord) {
+                    this.traversable = false;
+                } 
+            }
+            if (this.coord.x < Node.field.minX || this.coord.x >= Node.field.maxX || this.coord.y < Node.field.minY || this.coord.y >= Node.field.maxY) {
+                this.traversable = false;
+            }
         }
     }
-    // public void print(String prefix) {
-    //     System.out.println(prefix + ": " + this.f + );
-    // }
     public static void setField(Field field) {
         Node.field = field;
     }

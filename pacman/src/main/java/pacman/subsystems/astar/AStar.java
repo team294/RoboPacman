@@ -23,7 +23,6 @@ public class AStar {
         System.out.println("Goal: " + goal.x + ", " + goal.y);
         points[start.y][start.x].setF(goal, 0);
         points[start.y][start.x].open();
-        points[start.y][start.x].setLength(0);
         System.out.println("Start Opened? " + points[start.y][start.x].OPENED);
         System.out.println("Start F: " + points[start.y][start.x].f);
     }
@@ -35,6 +34,13 @@ public class AStar {
     public Node calculate() {
         Node current = new Node();
         while(!finished) {
+            for (Node[] row: points) {
+                for (Node point: row) {
+                    if (point.CLOSED) {
+                        System.out.println("Closed: " + Coord.toString(point.coord));
+                    }
+                }
+            }
             Node lowest = new Node();
             for (Node[] row: points) {
                 for (Node point: row) {
@@ -42,16 +48,19 @@ public class AStar {
                         // System.out.println("Point f: " + point.f);
                         // System.out.println("Current f: " + current.f);
                         if (point.f < lowest.f) {
-                            current = point;
+                            lowest = point;
                         }
                         // System.out.println("Updated f: " + current.f);
                     }
                 }   
             }
+            current = lowest;
+            // System.out.println("Current: " + Coord.toString(current.coord) + " F: " + current.f + " Open: " + current.OPENED + " Closed: " + current.CLOSED);
+            // current.printData((String) "Current");
             for (Node[] row: points) {
                 for (Node point: row) {
                     if (point == current) {
-                        System.out.println("Closing point: " + Coord.toString(current.coord));
+                        // System.out.println("Closing point: " + Coord.toString(current.coord));
                         point.close();
                     }
                 }
@@ -60,30 +69,32 @@ public class AStar {
                 finished = true;
                 break;
             }
-
             for (Coord x: findNeighbors(current)) {
                 Node xNode = new Node(x);
                 xNode.setF(goal, current.pathLength+1);
                 if (xNode.traversable) {
                     if (!xNode.CLOSED) {
-                        xNode.setLength(current.pathLength+1);
-                        xNode.setParent(current);
-                        xNode.open();
-                        points[x.y][x.x] = xNode;
+                        if (!xNode.OPENED || xNode.f < current.f) {
+                            xNode.setParent(current);
+                            xNode.open();
+                            points[x.y][x.x] = xNode;
+                        }
                     }
                 }
+                // System.out.println("Neighboor " + i++ + ": " + Coord.toString(xNode.coord) + " F: " + xNode.f + " Open: " + xNode.OPENED + " Closed: " + xNode.CLOSED);
+                // current.printData((String) "Neighbor " + i);
             }
             String str = "";
             for (Node[] row: points) {
                 for (Node point: row) {
                     if (point == current) {
-                        str += "n";
+                        str += "C";
                     } else if (point.CLOSED) {
-                        str += "c";
+                        str += "X";
                     } else if (point.OPENED) {
-                        str += "o";
+                        str += "O";
                     } else {
-                        str += "x";
+                        str += "0";
                     }
                     str += " ";
                 }   
