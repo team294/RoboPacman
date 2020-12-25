@@ -28,7 +28,7 @@ public class Turn extends CommandBase {
 		int angle;
 
 		angle = Robot.driveTrain.getAngle();
-		// System.out.println(">>>>>>>> Current Angle: " + angle + "    turnAngle: " + turnAngle);
+		System.out.println(">>>>>>>> Current Angle: " + angle + "    turnAngle: " + turnAngle);
 
 		// Find the fewest turns to the specified angle
 		if ( (angle - turnAngle) == 90 ) {
