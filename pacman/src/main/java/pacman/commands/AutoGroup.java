@@ -48,7 +48,10 @@ public class AutoGroup extends CommandGroupBase{
 		// addSequential(new MoveForwardAvoidGhosts());
 
 		// Challenge 3 - Eat all the random dots
-		addSequential(new EatAllDots());
+		// addSequential(new EatAllDots());
+
+		// Challenge 4 - Eat all the random dots and Avoid the Ghosts
+		addSequential(new EatAllDotsAvoidGhosts());
 	} 
 	
 }

@@ -26,7 +26,10 @@ public class Robot extends RobotBase {
 		// robotRunner.run(robot, new AutoGroup(), RUN_NORMAL, 2);
 
 		// Challenge 3
-		robotRunner.run(robot, new AutoGroup(), RUN_FAST, 5);
+		// robotRunner.run(robot, new AutoGroup(), RUN_SLOW, 5);
+
+		// Challenge 4
+		robotRunner.run(robot, new AutoGroup(), RUN_FAST, 6);
 	}
 
 }
