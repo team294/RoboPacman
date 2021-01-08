@@ -65,6 +65,8 @@ public class FollowAStarPath extends CommandBase {
 		nextTarget = robotCoords.closestTo(dotLocations);
         field.update(ghostLocations);
 		
+		
+
 		AStar route = new AStar(field, robotCoords, nextTarget);
 		Node res = route.calculate();
 

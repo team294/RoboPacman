@@ -6,6 +6,11 @@ import pacman.robot.Robot;
 import pacman.subsystems.Coord;
 import pacman.subsystems.astar.*;
 
+
+// TODO add 1 wide not traversable barrier around ghosts
+// TODO check to see if closest dot is traversable, if not choose next one, etc.
+// TODO add boolean parameter that will tell whether to turn on ghost barrier option
+// TODO maybe check to see if ghost has moved, if yes add barrier, if not do nothing
 public class AStarPathTest extends CommandBase {
 	Coord start;
 	Coord[] obstacles;
@@ -47,17 +52,23 @@ public class AStarPathTest extends CommandBase {
 		start = new Coord(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 		obstacles = Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
 		
-		this.map = new Field(11, 8, obstacles);
+		map = new Field(11, 8, obstacles);
+
+		map.setExtremes(1, 1, 11, 8);
 	}
 	
 	@Override
 	protected void execute() {
-		start = new Coord(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
+		start.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 		obstacles = Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
 		map.update(obstacles);
 		System.out.println(Coord.toString(map.obstacles));
 
 		Coord goal = start.closestTo(Coord.intArrToCoord(Robot.dotSensor.getDotLocations()));
+
+		System.out.println("Start: " + Coord.toString(start));
+		System.out.println("Goal: " + Coord.toString(goal));
+		System.out.println("Obstacles" + Coord.toString(map.obstacles));
 
 		AStar route = new AStar(map, start, goal);
 		Node res = route.calculate();
@@ -65,12 +76,11 @@ public class AStarPathTest extends CommandBase {
 		System.out.println("Res: " + res.pathLength);
 		System.out.println(Coord.toString(res));
 		Node last = res;
-		for (int i = 0; i < res.pathLength; i++) {
+		for (int i = 1; i < res.pathLength; i++) {
 			System.out.println(Coord.toString(last.parent));
 			last = last.parent;
 		}
-
-		follow(res);
+		follow(last);
 	}
 	
 	@Override

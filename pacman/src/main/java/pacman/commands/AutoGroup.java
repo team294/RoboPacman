@@ -5,6 +5,7 @@ import pacman.base.CommandGroupBase;
 public class AutoGroup extends CommandGroupBase{
 	
 	public AutoGroup() {
+		// addSequential(new FieldTest());  
 		addSequential(new AStarPathTest());  
 	} 
 	
