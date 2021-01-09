@@ -6,9 +6,17 @@ import pacman.robot.Robot;
 import pacman.subsystems.Coord;
 import pacman.subsystems.astar.*;
 
-public class AStarPathTest extends CommandBase {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+// TODO add 1 wide not traversable barrier around ghosts
+// TODO check to see if closest dot is traversable, if not choose next one, etc.
+// TODO add boolean parameter that will tell whether to turn on ghost barrier option
+// TODO maybe check to see if ghost has moved, if yes add barrier, if not do nothing
+public class AStarPathGhostBarrier extends CommandBase {
 	Coord start;
 	Coord[] obstacles;
+	Coord[] dotLocations;
 	Field map = new Field(5, 5, Coord.intArrToCoord(new int[][] {{1, 4}, {2, 3}, {3, 0}}));
 
 	private void goStraightOrTurn(int desiredAngle) {
@@ -41,14 +49,26 @@ public class AStarPathTest extends CommandBase {
         goStraightOrTurn(findDesiredAngle(start, nextOnPath));
     }
 
+	private Coord[] getBarrierObstacles(Coord[] obstacles) {
+		ArrayList<Coord> list = new ArrayList<Coord>(Arrays.asList(obstacles));
+		for (Coord obstacle: obstacles) {
+			list.addAll(Arrays.asList(obstacle.findNeighbors()));
+			list.add(obstacle);
+		}
+		return list.toArray(new Coord[0]);
+	}
+
 	@Override
 	protected void initialize() {
-		System.out.println("AStarPathTest.initialize");
+		System.out.println("AStarPathGhostBarrier.initialize");
 		start = new Coord(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
+
+		// get obstacles and add barrier
 		obstacles = Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
-
+		obstacles = getBarrierObstacles(obstacles);
+		
+		// make map
 		map = new Field(11, 8, obstacles);
-
 		map.setExtremes(1, 1, 11, 8);
 	}
 	
@@ -56,10 +76,21 @@ public class AStarPathTest extends CommandBase {
 	protected void execute() {
 		start.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 		obstacles = Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
+		obstacles = getBarrierObstacles(obstacles);
 		map.update(obstacles);
+
 		System.out.println(Coord.toString(map.obstacles));
 
-		Coord goal = start.closestTo(Coord.intArrToCoord(Robot.dotSensor.getDotLocations()));
+		dotLocations = Arrays.asList(Coord.intArrToCoord(Robot.dotSensor.getDotLocations()))
+			.stream()
+			.filter(x -> x.traversable(map))
+			.toArray(Coord[]::new);
+
+		if (dotLocations.length == 0) {
+			return;
+		}
+
+		Coord goal = start.closestTo(dotLocations);
 
 		System.out.println("Start: " + Coord.toString(start));
 		System.out.println("Goal: " + Coord.toString(goal));
@@ -80,7 +111,7 @@ public class AStarPathTest extends CommandBase {
 	
 	@Override
 	protected boolean isFinished() {
-		return (Robot.dotSensor.getDotLocations().length == 0) ? true : false;
+		return (dotLocations.length == 0) ? true : false;
 	}
 
 }

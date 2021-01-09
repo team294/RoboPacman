@@ -10,7 +10,7 @@ public class Robot extends RobotBase {
 	public static long RUN_FAST = 50;
 	public static long RUN_VFAST = 10;
 	public static long RUN_SLOW = 500;
-	public static int LEVEL = 6;
+	public static int LEVEL = 4;
 	
 	public static void main(String[] args) {
 

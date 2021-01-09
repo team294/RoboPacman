@@ -6,6 +6,7 @@ public class AutoGroup extends CommandGroupBase{
 	
 	public AutoGroup() {
 		// addSequential(new FieldTest());  
+		addSequential(new AStarPathGhostBarrier());  
 		addSequential(new AStarPathTest());  
 	} 
 	

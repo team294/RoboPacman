@@ -69,6 +69,9 @@ public class Coord {
             .stream()
             .anyMatch(this::equals);
     }
+    public Coord[] findNeighbors() {
+		return Coord.intArrToCoord(new int[][] {{this.x-1, this.y}, {this.x+1, this.y}, {this.x, this.y+1}, {this.x, this.y-1}});
+	}
     public static String toString(Coord a) {
         return (a.exists()) ? "("+a.x+", "+a.y+")" : "Doesn't exist";
     }

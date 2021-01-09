@@ -24,9 +24,9 @@ public class AStar {
     // time = System.currentTimeMillis();
   }
 
-  private Coord[] findNeighbors(Node center) {
-    return Coord.intArrToCoord(new int[][] {{center.x-1, center.y}, {center.x+1, center.y}, {center.x, center.y+1}, {center.x, center.y-1}});
-  }
+  // private Coord[] findNeighbors(Node center) {
+  //   return Coord.intArrToCoord(new int[][] {{center.x-1, center.y}, {center.x+1, center.y}, {center.x, center.y+1}, {center.x, center.y-1}});
+  // }
 
   public Node calculate() {
     boolean finished = false;
@@ -43,13 +43,15 @@ public class AStar {
       CLOSED.add(current);
       // System.out.println(Coord.toString(current));
 
-      if (current.equals(goal)) {
+      if (current.equals(goal) || current.equals(last)) {
         finished = true;
         // System.out.println((double) (System.currentTimeMillis() - time)/1000);
         break;
       }
 
-      // Coord[] neighbors = findNeighbors(current);
+      System.out.println(Coord.toString(current));
+
+      // Coord[] neighbors = current.findNeighbors();
       // Arrays.asList(neighbors)
       //   .stream()
       //   .map(x -> new Node(x, goal, current.pathLength+1))
@@ -60,7 +62,7 @@ public class AStar {
       //   .filter(x -> !x.inside(OPENED))
       //   .forEach(OPENED::add);
 
-      for (Coord neighbor: findNeighbors(current)) {
+      for (Coord neighbor: current.findNeighbors()) {
         Node nNode = new Node(neighbor, goal, current.pathLength+1);
         if (!nNode.traversable(field) || nNode.inside(CLOSED)) {
           continue;
