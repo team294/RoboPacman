@@ -6,7 +6,7 @@ import pacman.robot.Robot;
 import pacman.subsystems.Coord;
 import pacman.subsystems.astar.*;
 
-public class AStarPathTest extends CommandBase {
+public class AStarPathToClosestDot extends CommandBase {
 	Coord start;
 	Coord[] obstacles;
 	Field map = new Field(5, 5, Coord.intArrToCoord(new int[][] {{1, 4}, {2, 3}, {3, 0}}));
@@ -54,29 +54,35 @@ public class AStarPathTest extends CommandBase {
 	
 	@Override
 	protected void execute() {
-		// TODO go through every dot and find the one with the shortest path
-
 		start.set(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY());
 		obstacles = Coord.intArrToCoord(Robot.ghostSensor.getGhostLocations());
 		map.update(obstacles);
 		System.out.println(Coord.toString(map.obstacles));
 
-		Coord goal = start.closestTo(Coord.intArrToCoord(Robot.dotSensor.getDotLocations()));
+		Node res = new Node();
 
-		System.out.println("Start: " + Coord.toString(start));
-		System.out.println("Goal: " + Coord.toString(goal));
-		System.out.println("Obstacles" + Coord.toString(map.obstacles));
+		for (Coord goal: Coord.intArrToCoord(Robot.dotSensor.getDotLocations())) {
+			System.out.println("Start: " + Coord.toString(start));
+			System.out.println("Goal: " + Coord.toString(goal));
+			System.out.println("Obstacles" + Coord.toString(map.obstacles));
 
-		AStar route = new AStar(map, start, goal);
-		Node res = route.calculate();
+			AStar route = new AStar(map, start, goal);
+			Node path = route.calculate();
 
-		System.out.println("Res: " + res.pathLength);
-		System.out.println(Coord.toString(res));
+			if (path.pathLength < res.pathLength) {
+				res = path;
+			}
+
+			System.out.println("Res: " + path.pathLength);
+			System.out.println(Coord.toString(path));
+		}
+
 		Node last = res;
 		for (int i = 1; i < res.pathLength; i++) {
 			System.out.println(Coord.toString(last.parent));
 			last = last.parent;
 		}
+
 		follow(last);
 	}
 	

@@ -14,6 +14,7 @@ public class Node extends Coord  {
     this.x = Coord.farPoint.x;
     this.y = Coord.farPoint.y;
     this.f = Coord.farPoint.x;
+    this.pathLength = Coord.farPoint.x;
   }
   public Node(Coord point) {
     this.x = point.x;
@@ -38,8 +39,9 @@ public class Node extends Coord  {
     this.pathLength = h;
   }
 
-  public void setParent(Node parent) {
+  public Node setParent(Node parent) {
     this.parent = parent;
+    return this;
   }
 
   public Node alreadyIn(ArrayList<Node> arr) {
